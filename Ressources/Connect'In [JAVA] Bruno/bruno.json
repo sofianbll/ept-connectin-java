@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Connect'In [JAVA]",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

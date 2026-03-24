@@ -1,0 +1,25 @@
+meta {
+  name: Get My Profile
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/user
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Response must be [200]", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("Profil structure is correct bro!", function() {
+    const data = res.getBody();
+    expect(data).to.have.property('id');
+    expect(data).to.have.property('firstName');
+    expect(data).to.have.property('lastName');
+    expect(data).to.have.property('email');
+  });
+}

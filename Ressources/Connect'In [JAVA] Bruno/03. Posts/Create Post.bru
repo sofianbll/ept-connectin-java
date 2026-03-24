@@ -1,0 +1,29 @@
+meta {
+  name: Create Post
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/posts
+  body: multipartForm
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:multipart-form {
+  captions: new post
+}
+
+tests {
+  test("Response must be [201]", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 201]);
+  });
+  
+  test("Correct : response contains captions", function() {
+    expect(res.getBody()).to.have.property('captions');
+  });
+}

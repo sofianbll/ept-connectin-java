@@ -1,0 +1,34 @@
+meta {
+  name: Create Comment
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/posts/1/comments
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "text": "New comment"
+  }
+}
+
+tests {
+  test("Response must be [201]", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 201]);
+  });
+  
+  test("Correct : Response contains the new comment details", function() {
+    const data = res.getBody();
+    expect(data).to.have.property('id');
+    expect(data).to.have.property('text');
+    expect(data).to.have.property('user');
+  });
+}
