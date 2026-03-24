@@ -1,0 +1,40 @@
+Rapport Technique : Développement du Backend Connect'In
+
+1. Environnement et Infrastructure
+Pour le développement de ce projet, nous avons choisi d'utiliser Laravel Sail afin de conteneuriser l'ensemble de l'application.
+Ce choix répond à une problématique de portabilité.
+En utilisant Docker pour isoler PHP et MySQL, nous nous sommes assurés que l'application fonctionnerait de manière identique sur n'importe quel poste de travail.
+L'architecture repose sur un fichier de configuration qui orchestre ces différents services sans polluer le système d'exploitation hôte.
+Pour la gestion des fichiers, notamment les images de profil et les publications, nous avons mis en place un lien symbolique reliant le stockage interne au dossier public, permettant ainsi au navigateur d'accéder aux ressources statiques.
+
+2. Sécurité et Authentification
+La sécurisation des échanges repose sur Laravel Sanctum.
+Ce système est particulièrement adapté aux applications modernes car il utilise des jetons d'accès.
+Lorsqu'un utilisateur s'identifie, le serveur lui délivre un token qu'il devra joindre à chacune de ses requêtes suivantes pour prouver son identité.
+Au niveau de l'inscription, nous avons intégré une contrainte de validation spécifique via une expression régulière pour limiter la création de comptes aux adresses emails du domaine Epitech.
+Concernant la gestion des données sensibles, les mots de passe sont systématiquement hachés par l'algorithme Bcrypt avant leur insertion en base de données, garantissant qu'aucune information n'est stockée en clair.
+
+3. Modélisation de la Base de Données
+Le schéma relationnel a été conçu pour supporter les interactions sociales classiques tout en ajoutant une couche organisationnelle.
+Les tables principales comme les utilisateurs, les publications et les commentaires intègrent le Soft Delete.
+Cette fonctionnalité permet de marquer une donnée comme supprimée sans l'effacer physiquement, ce qui est essentiel pour la traçabilité et la récupération de données.
+La gestion des communautés s'appuie sur une table dédiée aux équipes et une table pivot pour lier les membres.
+Cette structure permet de définir des rôles précis au sein d'un groupe, comme celui d'administrateur d'équipe, indépendamment du rôle global de l'utilisateur sur la plateforme.
+
+4. Logique Métier et Optimisation
+Le coeur de l'application se trouve dans le traitement des flux de données.
+Nous avons développé un système de filtrage qui adapte l'affichage selon que l'utilisateur consulte le fil d'actualité général ou celui d'une équipe spécifique.
+Pour éviter les problèmes de performance liés aux requêtes SQL trop nombreuses, nous avons utilisé le chargement précoce, ou Eager Loading.
+Cette technique permet de récupérer un post et toutes ses relations, comme l'auteur et les commentaires, en une seule requête optimisée.
+Enfin, nous avons implémenté une logique de permissions hiérarchique pour la modération.
+La suppression d'un contenu n'est pas seulement réservée à son auteur, elle est également possible pour le propriétaire de l'équipe concernée.
+Pour les interactions comme les mentions J'aime, nous avons privilégié une méthode de bascule (toggle) qui simplifie la communication entre le front-end et le back-end en gérant l'ajout et le retrait via un point de terminaison unique.
+
+5. Communication et Standard de l'API
+Pour assurer une communication fluide avec le Front-end (React), nous avons standardisé les échanges de données.
+L'API communique exclusivement en JSON, ce qui permet une séparation totale entre la logique serveur et l'interface utilisateur.
+Format des réponses : Chaque requête réussie renvoie les objets demandés avec leurs relations déjà chargées, évitant au Front-end de multiplier les appels.
+Par exemple, lors de la récupération d'un post, l'API renvoie directement l'objet utilisateur complet et la liste des commentaires associés.
+Gestion des codes HTTP : Nous avons veillé à utiliser les codes de statut standards pour que le Front-end puisse réagir correctement : 201 pour une création réussie, 401 pour un problème d'authentification, 403 en cas de refus de permission (modération) et 422 lorsque les données envoyées ne respectent pas les règles de validation.
+Traitement des images : L'API ne stocke pas les images directement en base de données. Elle génère un chemin d'accès (image_path) que le Front-end utilise pour construire l'URL finale.
+Cela permet de garder une base de données légère et performante.
