@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-frontend/frontend/node_modules/
+frontend-root/frontend/node_modules/
 
 # NPM
 npm-debug.log*
