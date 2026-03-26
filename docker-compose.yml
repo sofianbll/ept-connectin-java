@@ -1,4 +1,15 @@
 services:
+  frontend:
+    build: ./frontend/frontend/
+#    image:
+    ports:
+      - "5173:5173"
+
+  backend:
+    build: ./backend/
+    ports:
+      - "8080:8080"
+
   db:
     image: mysql:8.4
     container_name: connectin_db
