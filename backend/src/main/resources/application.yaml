@@ -1,7 +1,18 @@
 spring:
   application:
     name: backend
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+
+  datasource:
+    # URL de connexion : localhost, port 3306, base "connectin_v2",
+    url: jdbc:mysql://localhost:3306/connectin_v2?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
