@@ -8,11 +8,11 @@
         <version>4.0.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.connect-in</groupId>
+    <groupId>com.connect_in</groupId>
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name/>
-    <description/>
+    <name>Connect'In v2 API</name>
+    <description>Spring Boot REST API for Connect'In</description>
     <url/>
     <licenses>
         <license/>

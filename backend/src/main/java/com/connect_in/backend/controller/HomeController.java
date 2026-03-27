@@ -1,4 +1,4 @@
-package com.connect_in.backend;
+package com.connect_in.backend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
