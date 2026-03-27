@@ -4,6 +4,7 @@ services:
   db-service:
     image: mysql:8.4
     container_name: ${PROJECT_NAME}-db
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
@@ -11,16 +12,21 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
       - "${DB_PORT_EXTERNAL}:${DB_PORT_INTERNAL}"
+    volumes:
+      - db:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASSWORD}" ]
       interval: 10s
       retries: 5
+      start_period: 5s
 
   backend-service:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: ${PROJECT_NAME}-api
+    volumes:
+      - ./backend/src:/app/src
     depends_on:
       db-service:
         condition: service_healthy
@@ -42,3 +48,6 @@ services:
       - "${FRONT_PORT_EXTERNAL}:${FRONT_PORT_INTERNAL}"
     environment:
       VITE_API_URL: ${PUBLIC_API_URL}
+
+volumes:
+  db:
