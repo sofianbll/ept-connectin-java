@@ -1,7 +1,8 @@
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 const api = axios.create({
-  baseURL: "http://localhost:8080/api", // URL du Sail
+  baseURL: `${API_BASE_URL}/api`, // URL du Sail
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
