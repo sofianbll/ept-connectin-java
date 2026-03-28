@@ -15,5 +15,9 @@ spring:
         format_sql: ${HIBERNATE_FORMAT_SQL:false}
         highlight_sql: true
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION:900000}
+
 server:
   port: ${API_PORT_INTERNAL:8080}
