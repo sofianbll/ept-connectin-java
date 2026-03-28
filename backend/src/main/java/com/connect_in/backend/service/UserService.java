@@ -8,9 +8,10 @@ import com.connect_in.backend.model.dto.request.CreateUserRequest;
 import com.connect_in.backend.model.dto.request.UpdateUserRequest;
 import com.connect_in.backend.model.entity.User;
 import com.connect_in.backend.repository.UserRepository;
-import jakarta.validation.ValidationException;
+import com.connect_in.backend.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,12 +46,10 @@ public class UserService {
     }
 
     // READ - Récupérer tous les utilisateurs
-    public List<UserDTO> getAllUsers(Pageable pageable) {
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
         log.info("Récupération de tous les utilisateurs");
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toDTO)
-                .collect(Collectors.toList());
+        return userRepository.findAll(pageable)
+                .map(userMapper::toDTO);
     }
 
     // READ - Récupérer un utilisateur par son ID
