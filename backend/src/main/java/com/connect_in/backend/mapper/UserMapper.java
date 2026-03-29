@@ -14,10 +14,10 @@ public class UserMapper {
         }
         return new UserDTO(
                 user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
-                user.getName(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
+                user.getRole() != null ? user.getRole().name() : null
         );
     }
 
@@ -27,7 +27,8 @@ public class UserMapper {
         }
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setName(request.getName());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
         return user;
     }
 }

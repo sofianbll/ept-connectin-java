@@ -11,7 +11,4 @@ public class AuthResponse {
     @JsonProperty("access_token")
     private String accessToken;
     private UserDTO user;
-
-    public AuthResponse(String accessToken) {
-    }
 }

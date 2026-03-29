@@ -78,8 +78,12 @@ public class UserService {
             user.setEmail(request.getEmail());
         }
 
-        if (request.getName() != null) {
-            user.setName(request.getName());
+        if (request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName());
+        }
+
+        if (request.getLastName() != null) {
+            user.setLastName(request.getLastName());
         }
 
         User updatedUser = userRepository.save(user);

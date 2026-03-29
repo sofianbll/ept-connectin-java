@@ -1,6 +1,7 @@
 package com.connect_in.backend.service;
 
 import com.connect_in.backend.exception.ValidationException;
+import com.connect_in.backend.model.dto.UserDTO;
 import com.connect_in.backend.model.dto.request.LoginRequest;
 import com.connect_in.backend.model.dto.request.RegisterRequest;
 import com.connect_in.backend.model.dto.response.AuthResponse;
@@ -37,7 +38,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-        return new AuthResponse(jwtService.generateToken(user));
+        return buildAuthResponse(user);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -48,6 +49,17 @@ public class AuthService {
         User user = userRepository.findUserByEmail(request.getEmail())
                 .orElseThrow();
 
-        return new AuthResponse(jwtService.generateToken(user));
+        return buildAuthResponse(user);
+    }
+
+    private AuthResponse buildAuthResponse(User user) {
+        UserDTO userDTO = new UserDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole().name()
+        );
+        return new AuthResponse(jwtService.generateToken(user), userDTO);
     }
 }

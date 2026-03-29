@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 public class UpdateUserRequest {
 
     @Email(message = "Invalid email")
-    private String email;  // Optionnel
+    private String email;
 
-    @Size(min = 2, max = 100, message = "Name must contain between 2 < AND > 255 characters")
-    private String name;  // Optionnel
+    @Size(min = 2, max = 255)
+    private String firstName;
+
+    @Size(min = 2, max = 255)
+    private String lastName;
 }
