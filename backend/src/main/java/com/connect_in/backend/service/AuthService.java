@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,12 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
+        if (!request.getPassword().equals(request.getPasswordConfirmation())) {
+            throw new ValidationException("Les mots de passe ne correspondent pas");
+        }
+
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new ValidationException("Email déjà utilisé : " + request.getEmail());
         }
@@ -46,7 +52,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        User user = userRepository.findUserByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
         return buildAuthResponse(user);
@@ -58,6 +64,7 @@ public class AuthService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                null,
                 user.getRole().name()
         );
         return new AuthResponse(jwtService.generateToken(user), userDTO);

@@ -17,6 +17,7 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                null,
                 user.getRole() != null ? user.getRole().name() : null
         );
     }

@@ -35,6 +35,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       HIBERNATE_FORMAT_SQL: ${DEBUG_SQL_FORMAT:-false}
       SPRING_JPA_SHOW_SQL: ${DEBUG_SQL_SHOW:-false}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-900000}
 
   frontend-service:
     build:
