@@ -24,4 +24,15 @@ tests {
   test("Status must be [201] OR [200]", function() {
     expect(res.getStatus()).to.be.oneOf([200, 201]);
   });
+
+  test("Response contains access_token", function() {
+    expect(res.getBody()).to.have.property("access_token");
+  });
+
+  test("Response contains user object", function() {
+    const data = res.getBody();
+    expect(data).to.have.property("user");
+    expect(data.user).to.have.property("id");
+    expect(data.user).to.have.property("firstName");
+  });
 }

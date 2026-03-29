@@ -19,8 +19,8 @@ body:json {
 
 script:post-response {
   let data = res.getBody();
-  if (res.getStatus() === 200 && data.token) {
-    bru.setEnvVar("access_token", data.token);
+  if (res.getStatus() === 200 && data.access_token) {
+    bru.setEnvVar("access_token", data.access_token);
   }
 }
 
@@ -28,8 +28,16 @@ tests {
   test("Status must be 200", function() {
     expect(res.getStatus()).to.equal(200);
   });
-  
-  test("Response contains token", function() {
-    expect(res.getBody()).to.have.property("token");
+
+  test("Response contains access_token", function() {
+    expect(res.getBody()).to.have.property("access_token");
+  });
+
+  test("Response contains user object", function() {
+    const data = res.getBody();
+    expect(data).to.have.property("user");
+    expect(data.user).to.have.property("id");
+    expect(data.user).to.have.property("firstName");
+    expect(data.user).to.have.property("email");
   });
 }
