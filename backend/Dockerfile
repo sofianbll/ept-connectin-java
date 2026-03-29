@@ -1,18 +1,28 @@
-# On utilise une image allégée avec le JDK Java 25
-FROM eclipse-temurin:25-jdk-alpine
-
+# STAGE 01
+FROM maven:4.0.0-rc-5-eclipse-temurin-25-alpine AS build
 WORKDIR /app
 
-# On copie les fichiers de configuration Maven
 COPY pom.xml .
-COPY mvnw .
-COPY .mvn ./.mvn
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn -B -q dependency:go-offline
 
-# On donne les droits d'exécution au script Maven
-RUN chmod +x mvnw
-
-# On copie le code source
 COPY src ./src
 
-# Run app -> spring-boot:run
-CMD ["./mvnw", "spring-boot:run"]
+# Build + remove -plain.jar to avoid conflict
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn -B -q clean package -DskipTests && \
+    rm -f target/*-plain.jar
+
+# Stage 02
+FROM eclipse-temurin:25-jre-alpine
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+# Add User & UserGroup for security
+#RUN addgroup -S spring && adduser -S spring -G spring
+#USER spring:spring
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
