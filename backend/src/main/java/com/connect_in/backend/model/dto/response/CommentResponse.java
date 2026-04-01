@@ -9,5 +9,6 @@ import lombok.Data;
 public class CommentResponse {
     private Long id;
     private String text;
+    private UserDTO author;
     private LocalDateTime createdAt;
 }

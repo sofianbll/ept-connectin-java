@@ -9,6 +9,6 @@ import lombok.Data;
 public class CommentRequest {
 
     @NotBlank(message = "Comments are required")
-    @Size(min = 10, message = "Text must be at least 10 characters")
+    @Size(max = 250, message = "Max : cannot be more than 250 words")
     private String text;
 }
