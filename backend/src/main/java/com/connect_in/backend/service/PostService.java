@@ -10,13 +10,13 @@ public class PostService {
     private final UserRepository userRepository;
 
     public Page<PostResponse> getAllPosts(Pageable pageable, User currentUser) {
-        return postRepository.findAll(pageable)
+        return postRepository.findAllByOrderByCreatedAtDes(pageable)
                 .map(post -> mapToResponse(post, currentUser));
     }
 
     public PostResponse getPostById(Long id, User currentUser) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post n'est pas trouvé"));
+                .orElseThrow(() -> new RuntimeException("Post n'as pas trouvé"));
         return mapToResponse(post, currentUser);
     }
 
