@@ -1,5 +1,6 @@
 package com.connect_in backend.model.entity;
 
+import com.connect_in.backend.model.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;

@@ -1,5 +1,12 @@
 package com.connect_in.backend.controller;
 
+import com.connect_in.backend.service.PostService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -18,7 +25,7 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
-    @PostMapping("posts")
+    @PostMapping("/posts")
     public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequestDTO, User currentUser) {
         PostResponse createdPost = postService.createPost(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
