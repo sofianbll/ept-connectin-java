@@ -26,8 +26,18 @@ public class CommentService {
     }
 
     @Transactional
-    public updateComment(Long postId, Long commentId, CommentRequestDTO, User currentUser) {
+    public UserDTO updateComment(Long postId, Long commentId, CommentRequestDTO, User currentUser) {
+        log.info("Mise à jour de le post avec l'ID : {}", id);
 
+        Comment comment = commentRepository.findByPostId(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment non trouvé avec le post ID : " + id));
+
+        // if
+
+        Comment updatedComment = commentRepository.save(comment);
+        log.info("Le comment mis à jour avec succès");
+
+        return userMapper.toDTO(updatedComment);
     }
 
     @Transactional
