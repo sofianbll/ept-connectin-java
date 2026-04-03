@@ -18,14 +18,14 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne  // java JPA, how to store the actual object
+    @ManyToOne(fetch = FetchType.LAZY)  // java JPA, how to store the actual object
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String captions;
 
-    @Column(name = "image_path")
+    @Column(name = "image_path", length = 255)
     private String imagePath;
 
     // java JPA, store the actual object
@@ -42,9 +42,9 @@ public class Post {
     private LocalDateTime deletedAt;
 
     // java JPA, store the actual object
-    // need to create Team.java after and make a link, relationship with it
+    // need to create Team.java after and make a link, relationship with it, with @ManyToOne
     @Column(name = "team_id")
-    private int teamId;
+    private Long teamId;
 
 
     @PrePersist

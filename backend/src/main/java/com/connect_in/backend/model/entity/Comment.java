@@ -1,6 +1,5 @@
-package com.connect_in backend.model.entity;
+package com.connect_in.backend.model.entity;
 
-import com.connect_in.backend.model.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -13,22 +12,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Comments {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // java JPA, how to store the actual object
+    @ManyToOne(fetch = FetchType.LAZY) // java JPA, how to store the actual object
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne // java JPA, how to store the actual object
+    @ManyToOne(fetch = FetchType.LAZY) // java JPA, how to store the actual object
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "text")
-    private String textText;
+    @Column(name = "text", columnDefinition = "TEXT")
+    private String text;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

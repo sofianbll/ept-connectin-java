@@ -1,56 +1,86 @@
 package com.connect_in.backend.service;
 
-import java.time.LocalDateTime;
+import com.connect_in.backend.model.dto.request.PostRequest;
+import com.connect_in.backend.model.dto.response.PostResponse;
+import com.connect_in.backend.model.entity.Post;
+import com.connect_in.backend.model.entity.User;
+import com.connect_in.backend.repository.PostRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
     public Page<PostResponse> getAllPosts(Pageable pageable, User currentUser) {
-        return postRepository.findAllByOrderByCreatedAtDes(pageable)
+        return postRepository.findAllByOrderByCreatedAtDesc(pageable)
                 .map(post -> mapToResponse(post, currentUser));
     }
 
     public PostResponse getPostById(Long id, User currentUser) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post n'as pas trouvé"));
+                .orElseThrow(() -> new RuntimeException("Post n'as pas trouvé avec l'ID : " + id));
         return mapToResponse(post, currentUser);
     }
 
     @Transactional
-    public createPost(PostRequestDTO, User currentUser) {
-        // to save and to return here the create section (response)
+    public PostResponse createPost(PostRequest request, User currentUser) {
+        Post post = Post.builder()
+                .captions(request.getCaptions())
+                .imagePath(request.getImagePath())
+                .teamId(request.getTeamId())
+                .user(currentUser)
+                .build();
 
+        Post saved = postRepository.save(post);
+        log.info("Post a bien créé avec l'ID : {}", saved.getId());
+        return mapToResponse(saved, currentUser);
     }
 
     @Transactional
-    public updatePost(Long id, UpdatePostRequest request) {
-        log.info("Mise à jour de le post avec l'ID : {}", id);
-
+    public PostResponse updatePost(Long id, PostRequest request, User currentUser) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + id));
+                .orElseThrow(() -> new RuntimeException("Post non trouvé avec l'ID : " + id));
+        post.setCaptions(request.getCaptions());
+        post.setImagePath(request.getImagePath());
+        post.setTeamId(request.getTeamId());
 
-        if (request.getPost() != null) {
-            if (postRepository.existsby)
-        }
-
+        Post updated = postRepository.save(post);
+        log.info("Mis à jour avec l'ID : {}", updated.getId());
+        return mapToResponse(updated, currentUser);
     }
 
     @Transactional
-    public void deletePost(Long id) {
-        log.info("Suppression du Post avec l'ID : {}", id);
+    public void deletePost(Long id, User currentUser) {
 
-        if (!userRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Post non trouvé avec l'ID : " + id);
+        if (!postRepository.existsById(id)) {
+            throw new RuntimeException("Post non trouvé avec l'ID : " + id);
         }
 
-        userRepository.deleteById(id);
-        log.info("Post supprimé avec succès");
+        postRepository.deleteById(id);
+        log.info("Post supprimé avec ID : {}", id);
+    }
+
+// add more
+
+    private PostResponse mapToResponse(Post post, User currentUser) {
+        PostResponse response = new PostResponse();
+        response.setId(post.getId());
+        response.setCaptions(post.getCaptions());
+        response.setImagePath(post.getImagePath());
+        response.setCreatedAt(post.getCreatedAt());
+        response.setLikesCount(0);
+        response.setIsLiked(false);
+        response.setCommentsCount(0);
+        return response;
     }
 
 }
-
-

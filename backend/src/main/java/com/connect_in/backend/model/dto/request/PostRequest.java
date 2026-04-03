@@ -10,6 +10,9 @@ public class PostRequest {
     private String captions;
 
     // image can be null, it's optional
-    private String image_path;
+    private String imagePath;
+
+    // same this one is optional as well
+    private Long teamId;
 
 }
