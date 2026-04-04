@@ -20,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public ResponseEntity<UserDTO> getCurrentUser(Authentication authentication) {
         UserDTO user = userService.getUserByEmail(authentication.getName());
         return ResponseEntity.ok(user);
