@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.m2 \
 # Stage 02
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
-
+RUN mkdir -p storage/posts storage/avatars
 COPY --from=build /app/target/*.jar app.jar
 
 # Add User & UserGroup for security
