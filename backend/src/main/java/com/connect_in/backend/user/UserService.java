@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +48,7 @@ public class UserService {
 
     // PUT /api/user/update updates the current user's profile.
     @Transactional
+    @CacheEvict(value = "users-search", allEntries = true)
     public UserDTO updateCurrentUser(User currentUser, UpdateUserRequest request) {
         log.info("Updating profile for user ID: {}", currentUser.getId());
 
@@ -110,6 +113,7 @@ public class UserService {
     }
 
     // GET /api/users/search?q= searches by first or last name.
+    @Cacheable(value = "users-search", key = "#query")
     public List<UserDTO> searchUsers(String query) {
         return userRepository
                 .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query)

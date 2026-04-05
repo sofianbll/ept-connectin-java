@@ -13,6 +13,8 @@ import com.connect_in.backend.user.User;
 import com.connect_in.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ public class TeamService {
     private final TeamMemberRepository teamMemberRepository;
     private final UserRepository userRepository;
 
+    @Cacheable(value = "teams-list", key = "#currentUser.id")
     public List<TeamResponse> getTeams(User currentUser) {
         List<TeamMember> memberships = teamMemberRepository.findByUserId(currentUser.getId());
         return memberships.stream()
@@ -36,6 +39,7 @@ public class TeamService {
     }
 
     @Transactional
+    @CacheEvict(value = {"teams-list", "teams-detail"}, allEntries = true)
     public CreateTeamResponse createTeam(CreateTeamRequest request, User currentUser) {
         Team team = Team.builder()
                 .name(request.getName())
@@ -62,6 +66,7 @@ public class TeamService {
         );
     }
 
+    @Cacheable(value = "teams-detail", key = "#id")
     public TeamDetailResponse getTeamById(Long id) {
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + id));
@@ -80,6 +85,7 @@ public class TeamService {
     }
 
     @Transactional
+    @CacheEvict(value = {"teams-list", "teams-detail"}, allEntries = true)
     public void deleteTeam(Long id, User currentUser) {
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + id));
@@ -94,6 +100,7 @@ public class TeamService {
     }
 
     @Transactional
+    @CacheEvict(value = {"teams-list", "teams-detail"}, allEntries = true)
     public void addMember(Long teamId, AddTeamMemberRequest request, User currentUser) {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
@@ -120,6 +127,7 @@ public class TeamService {
     }
 
     @Transactional
+    @CacheEvict(value = {"teams-list", "teams-detail"}, allEntries = true)
     public void removeMember(Long teamId, Long memberId, User currentUser) {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
