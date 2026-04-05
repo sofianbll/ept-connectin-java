@@ -1,6 +1,7 @@
 package com.connect_in.backend.post;
 
 import com.connect_in.backend.post.dto.PostResponse;
+import com.connect_in.backend.post.dto.PostUpdateRequest;
 import com.connect_in.backend.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,15 +46,13 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // PUT /api/posts/{id} uses multipart/form-data.
-    @PutMapping(value = "/posts/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    // PUT /api/posts/{id} accepts JSON body.
+    @PutMapping("/posts/{id}")
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long id,
-            @RequestParam(required = false) String captions,
-            @RequestParam(required = false) MultipartFile image,
-            @RequestParam(name = "team_id", required = false) Long teamId,
+            @RequestBody PostUpdateRequest request,
             @AuthenticationPrincipal User currentUser) {
-        PostResponse updated = postService.updatePost(id, captions, image, teamId, currentUser);
+        PostResponse updated = postService.updatePost(id, request, currentUser);
         return ResponseEntity.ok(updated);
     }
 

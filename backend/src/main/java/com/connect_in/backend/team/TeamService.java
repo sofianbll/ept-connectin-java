@@ -1,5 +1,6 @@
 package com.connect_in.backend.team;
 
+import com.connect_in.backend.post.PostRepository;
 import com.connect_in.backend.shared.exception.ConflictException;
 import com.connect_in.backend.shared.exception.ForbiddenException;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
@@ -29,6 +30,7 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final TeamMemberRepository teamMemberRepository;
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @Cacheable(value = "teams-list", key = "#currentUser.id")
     public List<TeamResponse> getTeams(User currentUser) {
@@ -94,6 +96,7 @@ public class TeamService {
             throw new ForbiddenException("Only the team owner can delete the team.");
         }
 
+        postRepository.detachFromTeam(id);
         teamMemberRepository.deleteByTeamId(id);
         teamRepository.delete(team);
         log.info("Team deleted with ID: {}", id);

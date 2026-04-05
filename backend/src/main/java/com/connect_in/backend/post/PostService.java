@@ -4,6 +4,7 @@ import com.connect_in.backend.comment.CommentRepository;
 import com.connect_in.backend.comment.dto.CommentResponse;
 import com.connect_in.backend.like.LikeRepository;
 import com.connect_in.backend.post.dto.PostResponse;
+import com.connect_in.backend.post.dto.PostUpdateRequest;
 import com.connect_in.backend.shared.exception.ForbiddenException;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
 import com.connect_in.backend.team.Team;
@@ -78,7 +79,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long id, String captions, MultipartFile image, Long teamId, User currentUser) {
+    public PostResponse updatePost(Long id, PostUpdateRequest request, User currentUser) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
 
@@ -86,16 +87,8 @@ public class PostService {
             throw new ForbiddenException("You are not the author of this post.");
         }
 
-        if (captions != null && !captions.isBlank()) {
-            post.setCaptions(captions);
-        }
-        if (image != null && !image.isEmpty()) {
-            post.setImagePath(saveImage(image));
-        }
-        if (teamId != null) {
-            Team team = teamRepository.findById(teamId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
-            post.setTeam(team);
+        if (request.getCaptions() != null && !request.getCaptions().isBlank()) {
+            post.setCaptions(request.getCaptions());
         }
 
         Post updated = postRepository.save(post);

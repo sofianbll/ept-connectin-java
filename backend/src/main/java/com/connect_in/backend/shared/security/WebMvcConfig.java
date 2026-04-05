@@ -12,5 +12,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // Expose /storage (avatars, post images) via HTTP.
         registry.addResourceHandler("/storage/**")
                 .addResourceLocations("file:storage/");
+
+        // Handle double /storage/ prefix (PostItem.jsx bug workaround)
+        registry.addResourceHandler("/storage/storage/**")
+                .addResourceLocations("file:storage/");
     }
 }
