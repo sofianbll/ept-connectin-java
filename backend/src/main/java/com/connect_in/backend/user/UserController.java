@@ -21,13 +21,13 @@ public class UserController {
 
     private final UserService userService;
 
-    // GET /api/user — profil de l'utilisateur connecté
+    // GET /api/user returns the current user's profile.
     @GetMapping("/user")
     public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(userService.getCurrentUser(currentUser));
     }
 
-    // PUT /api/user/update — modifier son propre profil
+    // PUT /api/user/update updates the current user's profile.
     @PutMapping("/user/update")
     public ResponseEntity<UserDTO> updateCurrentUser(
             @AuthenticationPrincipal User currentUser,
@@ -35,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateCurrentUser(currentUser, request));
     }
 
-    // POST /api/user/avatar — uploader son avatar (multipart)
+    // POST /api/user/avatar uploads the current user's avatar (multipart).
     @PostMapping(value = "/user/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AvatarResponse> updateAvatar(
             @AuthenticationPrincipal User currentUser,
@@ -43,14 +43,14 @@ public class UserController {
         return ResponseEntity.ok(userService.updateAvatar(currentUser, file));
     }
 
-    // DELETE /api/user — supprimer son propre compte
+    // DELETE /api/user deletes the current user's account.
     @DeleteMapping("/user")
     public ResponseEntity<Map<String, Boolean>> deleteAccount(@AuthenticationPrincipal User currentUser) {
         userService.deleteAccount(currentUser);
         return ResponseEntity.ok(Map.of("delete_content", true));
     }
 
-    // GET /api/users/search?q= — recherche d'utilisateurs par nom/prénom
+    // GET /api/users/search?q= searches users by first or last name.
     @GetMapping("/users/search")
     public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String q) {
         return ResponseEntity.ok(userService.searchUsers(q));

@@ -14,7 +14,7 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    // POST /api/posts/{id}/like — toggle like/unlike, contrat frontend
+    // POST /api/posts/{id}/like toggles like/unlike.
     @PostMapping("/posts/{id}/like")
     public ResponseEntity<LikeResponse> toggleLike(
             @PathVariable Long id,

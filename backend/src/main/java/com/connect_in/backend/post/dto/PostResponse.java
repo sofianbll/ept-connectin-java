@@ -13,10 +13,10 @@ public class PostResponse {
     private Long id;
     private String captions;
     private String imagePath;
-    // "user" et non "author" — contrat frontend
+    // Use "user" instead of "author" (frontend contract).
     private UserDTO user;
     private int likesCount;
-    // @JsonProperty force "is_liked" en JSON (SNAKE_CASE global donnerait "liked" pour un boolean)
+    // @JsonProperty forces "is_liked" in JSON (SNAKE_CASE would yield "liked").
     @JsonProperty("is_liked")
     private boolean liked;
     private int commentsCount;

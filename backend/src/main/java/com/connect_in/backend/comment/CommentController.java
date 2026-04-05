@@ -19,7 +19,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    // GET /api/posts/{postId}/comments — liste paginée (usage interne / debug)
+    // GET /api/posts/{postId}/comments returns a paged list.
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<Page<CommentResponse>> getCommentsByPost(
             @PathVariable Long postId,
@@ -28,7 +28,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentsByPost(postId, pageable, currentUser));
     }
 
-    // POST /api/posts/{postId}/comments — créer un comment
+    // POST /api/posts/{postId}/comments creates a comment.
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentResponse> createComment(
             @PathVariable Long postId,
@@ -38,7 +38,7 @@ public class CommentController {
                 .body(commentService.createComment(postId, request, currentUser));
     }
 
-    // PUT /api/comments/{id} — frontend (route directe, sans postId)
+    // PUT /api/comments/{id} updates a comment.
     @PutMapping("/comments/{id}")
     public ResponseEntity<CommentResponse> updateComment(
             @PathVariable Long id,
@@ -47,7 +47,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.updateComment(id, request, currentUser));
     }
 
-    // DELETE /api/comments/{id} — frontend (route directe, sans postId)
+    // DELETE /api/comments/{id} deletes a comment.
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<Void> deleteComment(
             @PathVariable Long id,

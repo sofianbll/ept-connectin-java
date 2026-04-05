@@ -19,7 +19,7 @@ public class PostController {
 
     private final PostService postService;
 
-    // GET /api/posts?teamId=  → retourne List<> (pas Page<>) — contrat frontend
+    // GET /api/posts?teamId= returns a List (not Page).
     @GetMapping("/posts")
     public ResponseEntity<List<PostResponse>> getAllPosts(
             @RequestParam(required = false) Long teamId,
@@ -34,7 +34,7 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id, currentUser));
     }
 
-    // POST /api/posts — multipart/form-data (captions + image optionnelle + teamId optionnel)
+    // POST /api/posts uses multipart/form-data (captions, optional image, optional teamId).
     @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostResponse> createPost(
             @RequestParam String captions,
@@ -45,7 +45,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // PUT /api/posts/{id} — multipart/form-data
+    // PUT /api/posts/{id} uses multipart/form-data.
     @PutMapping(value = "/posts/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long id,

@@ -18,43 +18,43 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    // 401 — mauvais identifiants (login)
+    // 401 — Bad credentials (login)
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, Object>> handleBadCredentials(BadCredentialsException ex) {
-        log.warn("Mauvais identifiants : {}", ex.getMessage());
+        log.warn("Bad credentials: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("message", "Email ou mot de passe incorrect"));
+                .body(Map.of("message", "Email or password is incorrect."));
     }
 
-    // 404 — ressource non trouvée
+    // 404 — Resource not found
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleResourceNotFound(ResourceNotFoundException ex) {
-        log.error("Ressource non trouvée : {}", ex.getMessage());
+        log.error("Resource not found: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Map.of("message", ex.getMessage()));
     }
 
-    // 403 — accès interdit (auteur != utilisateur connecté)
+    // 403 — Access denied (author != current user)
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<Map<String, Object>> handleForbidden(ForbiddenException ex) {
-        log.warn("Accès interdit : {}", ex.getMessage());
+        log.warn("Access denied: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(Map.of("message", ex.getMessage()));
     }
 
-    // 422 — erreur de validation métier (email déjà pris, mot de passe incorrect, etc.)
-    // Format frontend : { "errors": { "field": ["message"] } }
+    // 422 — Domain validation error (email taken, wrong password, etc.)
+    // Frontend format: { "errors": { "field": ["message"] } }
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(ValidationException ex) {
-        log.warn("Erreur de validation : {}", ex.getMessage());
+        log.warn("Validation error: {}", ex.getMessage());
         Map<String, List<String>> errors = new HashMap<>();
         errors.put("message", List.of(ex.getMessage()));
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(Map.of("errors", errors));
     }
 
-    // 422 — erreurs Jakarta Bean Validation (@NotBlank, @Email, @Size, etc.)
-    // Format frontend : { "errors": { "field": ["message"] } }
+    // 422 — Jakarta Validation errors (@NotBlank, @Email, @Size, etc.)
+    // Frontend format: { "errors": { "field": ["message"] } }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         Map<String, List<String>> errors = new HashMap<>();
@@ -67,11 +67,11 @@ public class GlobalExceptionHandler {
                 .body(Map.of("errors", errors));
     }
 
-    // 500 — erreur inattendue
+    // 500 — Unexpected error
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        log.error("Erreur inattendue", ex);
+        log.error("Unexpected error", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("message", "Une erreur interne est survenue"));
+                .body(Map.of("message", "An internal error occurred."));
     }
 }

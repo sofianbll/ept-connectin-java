@@ -9,7 +9,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Expose le dossier /storage/ (uploads avatars, images posts) via HTTP
+        // Expose /storage (avatars, post images) via HTTP.
         registry.addResourceHandler("/storage/**")
                 .addResourceLocations("file:storage/");
     }

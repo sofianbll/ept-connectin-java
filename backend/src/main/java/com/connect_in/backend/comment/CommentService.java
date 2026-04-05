@@ -30,14 +30,14 @@ public class CommentService {
 
     public CommentResponse getCommentsById(Long commentId, User currentUser) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment non trouvé avec l'ID : " + commentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
         return mapToResponse(comment);
     }
 
     @Transactional
     public CommentResponse createComment(Long postId, CommentRequest request, User currentUser) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + postId));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + postId));
 
         Comment comment = Comment.builder()
                 .text(request.getText())
@@ -46,28 +46,28 @@ public class CommentService {
                 .build();
 
         Comment saved = commentRepository.save(comment);
-        log.info("Comment créé avec l'ID : {}", saved.getId());
+        log.info("Comment created with ID: {}", saved.getId());
         return mapToResponse(saved);
     }
 
     @Transactional
     public CommentResponse updateComment(Long commentId, CommentRequest request, User currentUser) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment non trouvé avec l'ID : " + commentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
         comment.setText(request.getText());
 
         Comment updated = commentRepository.save(comment);
-        log.info("Comment mis à jour avec l'ID : {}", updated.getId());
+        log.info("Comment updated with ID: {}", updated.getId());
         return mapToResponse(updated);
     }
 
     @Transactional
     public void deleteComment(Long commentId, User currentUser) {
         if (!commentRepository.existsById(commentId)) {
-            throw new ResourceNotFoundException("Comment non trouvé avec l'ID : " + commentId);
+            throw new ResourceNotFoundException("Comment not found with ID: " + commentId);
         }
         commentRepository.deleteById(commentId);
-        log.info("Comment supprimé avec l'ID : {}", commentId);
+        log.info("Comment deleted with ID: {}", commentId);
     }
 
     private CommentResponse mapToResponse(Comment comment) {

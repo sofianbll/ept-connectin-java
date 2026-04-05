@@ -20,7 +20,7 @@ import java.util.List;
 
 public class User implements UserDetails {
 
-    //<editor-fold desc="Attributes">
+    // <editor-fold desc="Attributes">
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

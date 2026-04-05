@@ -18,7 +18,7 @@ public class UserAdminController {
 
     @GetMapping
     public ResponseEntity<UserDTO> getAllUsers() {
-        // TODO Fix 5 : retourner List<UserDTO>
+    // TODO: return List<UserDTO>.
         return ResponseEntity.ok().build();
     }
 

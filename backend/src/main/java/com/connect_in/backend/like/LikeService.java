@@ -18,24 +18,24 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final PostRepository postRepository;
 
-    // Toggle : like si pas encore liké, unlike si déjà liké
+    // Toggle: like if not already liked; unlike otherwise.
     @Transactional
     public LikeResponse toggleLike(Long postId, User currentUser) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + postId));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + postId));
 
         boolean alreadyLiked = likeRepository.existsByPostIdAndUserId(postId, currentUser.getId());
 
         if (alreadyLiked) {
             likeRepository.deleteByPostIdAndUserId(postId, currentUser.getId());
-            log.info("Post unliké, postId={}, userId={}", postId, currentUser.getId());
+            log.info("Post unliked, postId={}, userId={}", postId, currentUser.getId());
         } else {
             Like like = Like.builder()
                     .post(post)
                     .user(currentUser)
                     .build();
             likeRepository.save(like);
-            log.info("Post liké, postId={}, userId={}", postId, currentUser.getId());
+            log.info("Post liked, postId={}, userId={}", postId, currentUser.getId());
         }
 
         boolean nowLiked = !alreadyLiked;

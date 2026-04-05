@@ -11,6 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
-    // GET /api/users/search?q= — recherche par prénom ou nom (insensible à la casse)
+    // GET /api/users/search?q= searches by first or last name (case-insensitive).
     List<User> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
 }

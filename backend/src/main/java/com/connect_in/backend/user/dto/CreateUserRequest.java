@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateUserRequest {
 
-    @NotBlank(message = "Mail is required")
-    @Email(message = "Invalid email")
+    @NotBlank(message = "Email is required.")
+    @Email(message = "Invalid email address.")
     private String email;
 
-    @NotBlank(message = "First name is required")
+    @NotBlank(message = "First name is required.")
     @Size(min = 2, max = 255)
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
+    @NotBlank(message = "Last name is required.")
     @Size(min = 2, max = 255)
     private String lastName;
 }

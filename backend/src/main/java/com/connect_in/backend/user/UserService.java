@@ -37,24 +37,24 @@ public class UserService {
     @Value("${storage.avatars-dir:storage/avatars}")
     private String avatarsStorageDir;
 
-    // ── Routes contrat frontend ───────────────────────────────────────────────
+    // Frontend contract routes
 
-    // GET /api/user — profil de l'utilisateur connecté
+    // GET /api/user returns the current user's profile.
     public UserDTO getCurrentUser(User currentUser) {
         return userMapper.toDTO(currentUser);
     }
 
-    // PUT /api/user/update — modifier son propre profil
+    // PUT /api/user/update updates the current user's profile.
     @Transactional
     public UserDTO updateCurrentUser(User currentUser, UpdateUserRequest request) {
-        log.info("Mise à jour du profil de l'utilisateur ID : {}", currentUser.getId());
+        log.info("Updating profile for user ID: {}", currentUser.getId());
 
         User user = userRepository.findById(currentUser.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         if (request.getEmail() != null && !request.getEmail().isBlank()) {
             if (!user.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail())) {
-                throw new ValidationException("Un utilisateur existe déjà avec cet email : " + request.getEmail());
+                throw new ValidationException("Email already in use: " + request.getEmail());
             }
             user.setEmail(request.getEmail());
         }
@@ -67,49 +67,49 @@ public class UserService {
             user.setLastName(request.getLastName());
         }
 
-        // Changement de mot de passe (optionnel)
+        // Optional password change.
         if (request.getNewPassword() != null && !request.getNewPassword().isBlank()) {
             if (request.getCurrentPassword() == null || !passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
-                throw new ValidationException("Mot de passe actuel incorrect");
+                throw new ValidationException("Current password is incorrect.");
             }
             if (!request.getNewPassword().equals(request.getNewPasswordConfirmation())) {
-                throw new ValidationException("Les nouveaux mots de passe ne correspondent pas");
+                throw new ValidationException("New passwords do not match.");
             }
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         }
 
         User updated = userRepository.save(user);
-        log.info("Profil mis à jour, ID : {}", updated.getId());
+        log.info("Profile updated for user ID: {}", updated.getId());
         return userMapper.toDTO(updated);
     }
 
-    // POST /api/user/avatar — uploader son avatar
+    // POST /api/user/avatar uploads the current user's avatar.
     @Transactional
     public AvatarResponse updateAvatar(User currentUser, MultipartFile file) {
         if (file == null || file.isEmpty()) {
-            throw new ValidationException("Aucun fichier fourni");
+            throw new ValidationException("No file provided.");
         }
 
         String avatarPath = saveAvatar(file);
 
         User user = userRepository.findById(currentUser.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
         user.setProfilPic(avatarPath);
         userRepository.save(user);
 
-        log.info("Avatar mis à jour pour l'utilisateur ID : {}", currentUser.getId());
+        log.info("Avatar updated for user ID: {}", currentUser.getId());
         return new AvatarResponse(avatarPath);
     }
 
-    // DELETE /api/user — supprimer son propre compte
+    // DELETE /api/user deletes the current user's account.
     @Transactional
     public void deleteAccount(User currentUser) {
-        log.info("Suppression du compte de l'utilisateur ID : {}", currentUser.getId());
+        log.info("Deleting account for user ID: {}", currentUser.getId());
         userRepository.deleteById(currentUser.getId());
-        log.info("Compte supprimé avec succès");
+        log.info("Account deleted successfully.");
     }
 
-    // GET /api/users/search?q= — recherche par prénom ou nom
+    // GET /api/users/search?q= searches by first or last name.
     public List<UserDTO> searchUsers(String query) {
         return userRepository
                 .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query)
@@ -118,20 +118,20 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // ── Routes admin (UserAdminController) ───────────────────────────────────
+    // Admin routes (UserAdminController)
 
     @Transactional
     public UserDTO createUser(CreateUserRequest request) {
-        log.info("(Admin) Création d'un utilisateur avec l'email : {}", request.getEmail());
+        log.info("(Admin) Creating user with email: {}", request.getEmail());
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ValidationException("Un utilisateur existe déjà avec cet email : " + request.getEmail());
+            throw new ValidationException("Email already in use: " + request.getEmail());
         }
 
         User user = userMapper.toEntity(request);
         User savedUser = userRepository.save(user);
 
-        log.info("Utilisateur créé avec succès, ID : {}", savedUser.getId());
+        log.info("User created successfully with ID: {}", savedUser.getId());
         return userMapper.toDTO(savedUser);
     }
 
@@ -141,18 +141,18 @@ public class UserService {
 
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé avec l'ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
         return userMapper.toDTO(user);
     }
 
     @Transactional
     public UserDTO updateUser(Long id, UpdateUserRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé avec l'ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
         if (request.getEmail() != null) {
             if (userRepository.existsByEmail(request.getEmail()) && !user.getEmail().equals(request.getEmail())) {
-                throw new ValidationException("Un utilisateur existe déjà avec cet email : " + request.getEmail());
+                throw new ValidationException("Email already in use: " + request.getEmail());
             }
             user.setEmail(request.getEmail());
         }
@@ -165,12 +165,12 @@ public class UserService {
     @Transactional
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Utilisateur non trouvé avec l'ID : " + id);
+            throw new ResourceNotFoundException("User not found with ID: " + id);
         }
         userRepository.deleteById(id);
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
+    // Helpers
 
     private String saveAvatar(MultipartFile file) {
         try {
@@ -183,8 +183,8 @@ public class UserService {
 
             return "/storage/avatars/" + filename;
         } catch (IOException e) {
-            log.error("Erreur lors de la sauvegarde de l'avatar : {}", e.getMessage());
-            throw new RuntimeException("Impossible de sauvegarder l'avatar", e);
+            log.error("Failed to save avatar: {}", e.getMessage());
+            throw new RuntimeException("Failed to save avatar.", e);
         }
     }
 }

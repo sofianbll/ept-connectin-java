@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AvatarResponse {
-    // Contrat frontend : { "avatar": "/storage/avatars/filename.jpg" }
+    // Frontend contract: { "avatar": "/storage/avatars/filename.jpg" }
     private String avatar;
 }

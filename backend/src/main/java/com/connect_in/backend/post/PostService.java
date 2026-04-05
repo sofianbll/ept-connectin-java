@@ -35,7 +35,7 @@ public class PostService {
     @Value("${storage.posts-dir:storage/posts}")
     private String postsStorageDir;
 
-    // GET /api/posts — filtre par teamId si fourni, sinon tous les posts
+    // GET /api/posts filters by teamId when provided.
     public List<PostResponse> getAllPosts(Long teamId, User currentUser) {
         List<Post> posts = (teamId != null)
                 ? postRepository.findAllByTeamIdOrderByCreatedAtDesc(teamId)
@@ -47,7 +47,7 @@ public class PostService {
 
     public PostResponse getPostById(Long id, User currentUser) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
         return mapToResponse(post, currentUser);
     }
 
@@ -63,14 +63,14 @@ public class PostService {
                 .build();
 
         Post saved = postRepository.save(post);
-        log.info("Post créé avec l'ID : {}", saved.getId());
+        log.info("Post created with ID: {}", saved.getId());
         return mapToResponse(saved, currentUser);
     }
 
     @Transactional
     public PostResponse updatePost(Long id, String captions, MultipartFile image, Long teamId, User currentUser) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
 
         if (captions != null && !captions.isBlank()) {
             post.setCaptions(captions);
@@ -83,20 +83,20 @@ public class PostService {
         }
 
         Post updated = postRepository.save(post);
-        log.info("Post mis à jour avec l'ID : {}", updated.getId());
+        log.info("Post updated with ID: {}", updated.getId());
         return mapToResponse(updated, currentUser);
     }
 
     @Transactional
     public void deletePost(Long id, User currentUser) {
         if (!postRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Post non trouvé avec l'ID : " + id);
+            throw new ResourceNotFoundException("Post not found with ID: " + id);
         }
         postRepository.deleteById(id);
-        log.info("Post supprimé avec l'ID : {}", id);
+        log.info("Post deleted with ID: {}", id);
     }
 
-    // --- Helpers ---
+    // Helpers
 
     private PostResponse mapToResponse(Post post, User currentUser) {
         boolean liked = likeRepository.existsByPostIdAndUserId(post.getId(), currentUser.getId());
@@ -141,11 +141,11 @@ public class PostService {
             Path filePath = dir.resolve(filename);
             Files.write(filePath, image.getBytes());
 
-            // Retourner le chemin accessible via /storage/posts/filename
+            // Return a public path under /storage/posts.
             return "/storage/posts/" + filename;
         } catch (IOException e) {
-            log.error("Erreur lors de la sauvegarde de l'image : {}", e.getMessage());
-            throw new RuntimeException("Impossible de sauvegarder l'image", e);
+            log.error("Failed to save image: {}", e.getMessage());
+            throw new RuntimeException("Failed to save image.", e);
         }
     }
 }
