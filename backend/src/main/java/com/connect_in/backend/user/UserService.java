@@ -36,7 +36,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${storage.avatars-dir:storage/avatars}")
+    @Value("${storage.avatars-dir:avatars}")
     private String avatarsStorageDir;
 
     // Frontend contract routes
