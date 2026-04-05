@@ -4,6 +4,7 @@ import com.connect_in.backend.comment.dto.CommentRequest;
 import com.connect_in.backend.comment.dto.CommentResponse;
 import com.connect_in.backend.post.Post;
 import com.connect_in.backend.post.PostRepository;
+import com.connect_in.backend.shared.exception.ForbiddenException;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
 import com.connect_in.backend.user.User;
 import com.connect_in.backend.user.UserMapper;
@@ -54,6 +55,10 @@ public class CommentService {
     public CommentResponse updateComment(Long commentId, CommentRequest request, User currentUser) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
+
+        if (!comment.getUser().getId().equals(currentUser.getId())) {
+            throw new ForbiddenException("You are not the author of this comment.");
+        }
         comment.setText(request.getText());
 
         Comment updated = commentRepository.save(comment);
@@ -63,10 +68,14 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Long commentId, User currentUser) {
-        if (!commentRepository.existsById(commentId)) {
-            throw new ResourceNotFoundException("Comment not found with ID: " + commentId);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
+
+        if (!comment.getUser().getId().equals(currentUser.getId())) {
+            throw new ForbiddenException("You are not the author of this comment.");
         }
-        commentRepository.deleteById(commentId);
+
+        commentRepository.delete(comment);
         log.info("Comment deleted with ID: {}", commentId);
     }
 
