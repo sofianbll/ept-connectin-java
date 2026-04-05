@@ -1,4 +1,5 @@
 target/
+/storage/avatars/3f1bd640-bcab-414c-8730-63a7920df42e_IMG_0748.jpeg
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
