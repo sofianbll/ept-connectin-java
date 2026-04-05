@@ -1,251 +1,197 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a id="readme-top"></a>
-
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
-  <a href="#readme-top">
-    <img src="Resources/images/ConnectIn.png" alt="Connect'In Logo" width="96" height="96">
-  </a>
+  <img src="Resources/images/ConnectIn-logo.svg" alt="Connect'In Logo" width="360">
 
-  <h3 align="center">Connect'In v2 — Spring Boot API</h3>
+  <h1>Connect'In v2 — Spring Boot API</h1>
 
-  <p align="center">
-    Migration du backend Laravel vers Spring Boot, frontend inchangé.
-    <br />
-    <a href="#getting-started"><strong>Getting Started</strong></a>
-    ·
-    <a href="#api-documentation">API Docs</a>
-    ·
-    <a href="#database-diagram">DB Diagram</a>
+  <p>
+    <strong>Migration complète du backend Laravel vers Spring Boot.</strong><br>
+    <em>Même frontend, nouvelle puissance sous le capot.</em>
+  </p>
+
+  <p>
+    <a href="#-getting-started">Installation</a> •
+    <a href="#-api-documentation">Documentation API</a> •
+    <a href="#-api-routes">Endpoints</a>
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#features">Features</a>
-      <ul>
-        <li><a href="#bonus">Bonus</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#makefile-commands">Makefile Commands</a></li>
-        <li><a href="#without-makefile">Without Makefile</a></li>
-      </ul>
-    </li>
-    <li><a href="#seed-accounts">Seed Accounts</a></li>
-    <li><a href="#api-documentation">API Documentation</a></li>
-    <li><a href="#database-diagram">Database Diagram</a></li>
-    <li><a href="#routes-summary">Routes Summary</a></li>
-    <li><a href="#project-structure">Project Structure</a></li>
-    <li><a href="#constraints">Constraints</a></li>
-  </ol>
-</details>
+<br>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+> **⚠️ Contrainte Majeure :** Le frontend fourni doit rester **strictement inchangé**. L'objectif de cette API est de reproduire fidèlement les routes et payloads attendus par le client existant, tout en améliorant la robustesse, la sécurité et la structure du code via Java Spring Boot.
 
-Connect'In v2 est une migration complète du backend Laravel vers Java Spring Boot, avec une contrainte forte: **le frontend ne doit pas être modifié**. L'objectif est de reproduire fidèlement les routes et payloads attendus par le client existant, tout en améliorant la robustesse (erreurs, sécurité, docker) et la structure du code.
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## 🛠️ Stack Technique
 
-### Built With
+<p align="center">
+  <img src="https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25">
+  <img src="https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=for-the-badge&logo=Spring-Boot&logoColor=white" alt="Spring Boot 4">
+  <img src="https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8.4">
+  <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white" alt="Maven">
+</p>
 
-* Java 25
-* Spring Boot 4
-* Spring Security + JWT
-* Spring Data JPA + Hibernate
-* MySQL 8.4
-* Docker + Docker Compose
-* Maven
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## ✨ Features & Architecture
 
-<!-- FEATURES -->
-## Features
+### Fonctionnalités Clés
+* **Authentification** : JWT (Register/Login) sécurisé par Spring Security.
+* **Utilisateurs** : Profil, upload d'avatar, recherche, suppression/anonymisation.
+* **Social** : CRUD des Posts (avec images et gestion d'équipe), Commentaires et Likes.
+* **Équipes** : Création, gestion des membres et des rôles.
+* **Data** : Seeders de données idempotents pour une démo immédiate.
 
-- Auth JWT (register/login) + profil utilisateur
-- Users: profile update, avatar upload, search, delete (anonymize/delete)
-- Posts CRUD + images + team posts
-- Comments CRUD
-- Likes toggle
-- Teams + members + roles
-- Seed data pour démo rapide
+### 🚀 Les "Plus" (Bonus)
+* Cache applicatif avec Spring (`@Cacheable` / `@CacheEvict`).
+* Tests unitaires couverts par JUnit + Mockito.
+* Gestion d'erreurs JSON uniformisée et globale.
+* Conteneurisation complète (Dev & Prod) pilotée par Makefile.
 
-### Bonus
-
-- Cache Spring (`@Cacheable` / `@CacheEvict`)
-- Seeders idempotents (démo immédiate)
-- Tests unitaires JUnit + Mockito
-- Docker dev/prod propre + Makefile
-- Gestion d'erreurs JSON uniformisée
-
-### Architecture
-
-Modular Monolith (par domaine métier) :
-
-```
+### 🏗️ Architecture (Modular Monolith)
+L'application est structurée par **domaine métier**, isolant chaque composant (Controller, Service, Repository, DTO) dans un module cohérent tout en conservant un déploiement unique :
+```text
 backend/src/main/java/com/connect_in/backend/
-  auth/
-  user/
-  post/
-  comment/
-  like/
-  team/
-  shared/
+ ├── auth/
+ ├── user/
+ ├── post/
+ ├── comment/
+ ├── like/
+ ├── team/
+ └── shared/
 ```
 
-Cette structure isole chaque domaine (controller/service/repository/dto) dans un module cohérent tout en conservant un déploiement unique.
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## 🚀 Getting Started
 
-<!-- GETTING STARTED -->
-## Getting Started
+### Prérequis
 
-### Prerequisites
+- **Docker Desktop** (pour la BDD et le déploiement)
+- **Node.js** (pour lancer le frontend fourni)
 
-- Docker Desktop
-- Node.js (pour le frontend)
-
-### Installation
+### Installation rapide
 
 ```bash
 git clone <PRIVATE_REPO_URL>
 cd connect-in-java
 ```
 
-### Makefile Commands
+### Commandes (Makefile)
+
+Un `Makefile` est fourni pour simplifier l'expérience développeur (DX).
+
+| Commande | Description |
+|:---:|:---:|
+| `make dev` | Lance l'environnement de développement (avec Hot-Reload) |
+| `make prod` | Lance l'environnement de production |
+| `make down` / `make down-dev` | Stoppe les conteneurs (Prod / Dev) |
+| `make reset` / `make reset-dev`| Réinitialise la base de données (Prod / Dev) |
+| `make clean` | Purge les images et les volumes Docker |
+| `make logs` / `make logs-db` | Affiche les logs en direct (Backend / BDD) |
+
+*Alternative sans Makefile :*
 
 ```bash
-make dev        # compose dev (hot-reload)
-make prod       # compose prod
-make down       # stop prod
-make down-dev   # stop dev
-make reset      # reset db prod
-make reset-dev  # reset db dev
-make clean      # purge images + volumes
-make logs       # backend logs
-make logs-db    # db logs
-```
-
-### Without Makefile
-
-```bash
-# Dev
+# Développement
 docker compose -f docker-compose.dev.yml up --build --force-recreate
 
-# Prod
+# Production
 docker compose up --build --force-recreate
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+---
 
-<!-- SEED ACCOUNTS -->
-## Seed Accounts
+## 🔑 Seed Accounts
 
+Pour tester l'application immédiatement, utilisez ces comptes générés par les seeders :
+
+* 📧 `sofian@test.com` | 🔒 `password123`
+* 📧 `alice@test.com` | 🔒 `password123`
+* 📧 `bob@test.com` | 🔒 `password123`
+* 📧 `shanisya@test.com` | 🔒 `password123`
+
+---
+
+## 📚 API Documentation
+
+Une fois l'application lancée, l'interface **Swagger UI** est disponible en local pour tester les routes :
+
+| Type | Ressource | Lien |
+|:---:|:---:|:---:|
+| Swagger local | UI interactive | [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) |
+| Swagger local | JSON brut (OpenAPI) | [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) |
+| Aperçu API | Users / Admin | [Resources/images/api/api-docs-users-admin.jpg](Resources/images/api/api-docs-users-admin.jpg) |
+| Aperçu API | Posts / Teams | [Resources/images/api/api-docs-posts-teams.jpg](Resources/images/api/api-docs-posts-teams.jpg) |
+| Export documentation | PDF API | [Resources/docs/ApiDocumentation.pdf](Resources/docs/ApiDocumentation.pdf) |
+| Export documentation | Markdown API | [Resources/notes/ApiDocumentation.md](Resources/notes/ApiDocumentation.md) |
+
+### 📄 Documentation Projet
+
+| Document | Format PDF | Format Markdown |
+|:---:|:---:|:---:|
+| Connect'In Version 2 | [Resources/docs/ConnectInVersion2.pdf](Resources/docs/ConnectInVersion2.pdf) | [Resources/notes/ConnectInVersion2.md](Resources/notes/ConnectInVersion2.md) |
+| Sujet du projet | [Resources/docs/project.pdf](Resources/docs/project.pdf) | [Resources/notes/project.md](Resources/notes/project.md) |
+
+---
+
+## 🗄️ Database Diagram
+
+<p align="center">
+  <img src="Resources/images/db/db-diagram-1.jpg" alt="Database Diagram" width="900">
+</p>
+
+Vue alternative : [Resources/images/db/db-diagram-2.jpg](Resources/images/db/db-diagram-2.jpg)
+
+---
+
+## 🛣️ API Routes
+
+### 🔐 Auth & Users
+
+| Method | Endpoint | Description |
+|:---:|:---:|:---:|
+| `POST` | `/api/register` | Create account |
+| `POST` | `/api/login` | Get JWT token |
+| `GET` | `/api/user` | Get current user profile |
+| `PUT` | `/api/user/update` | Update profile |
+| `POST` | `/api/user/avatar` | Upload avatar |
+| `DELETE` | `/api/user` | Delete account |
+| `GET` | `/api/users/search?q=` | Search users |
+
+### 📝 Posts & Comments
+
+| Method | Endpoint | Description |
+|:---:|:---:|:---:|
+| `GET` | `/api/posts` | List posts (supports `?team_id=` filter) |
+| `GET` | `/api/posts/{id}` | Get post details |
+| `POST` | `/api/posts` | Create post (`multipart`) |
+| `PUT` | `/api/posts/{id}` | Update post |
+| `DELETE` | `/api/posts/{id}` | Delete post |
+| `GET` | `/api/posts/{postId}/comments` | List post comments |
+| `POST` | `/api/posts/{postId}/comments` | Add comment |
+| `PUT` | `/api/comments/{id}` | Update comment |
+| `DELETE` | `/api/comments/{id}` | Delete comment |
+
+### ❤️ Likes & 🛡️ Teams
+
+| Method | Endpoint | Description |
+|:---:|:---:|:---:|
+| `POST` | `/api/posts/{id}/like` | Toggle like status |
+| `GET` | `/api/teams` | List teams |
+| `POST` | `/api/teams` | Create team |
+| `GET` | `/api/teams/{id}` | Get team details |
+| `DELETE` | `/api/teams/{id}` | Delete team |
+| `POST` | `/api/teams/{id}/members` | Add team member |
+| `DELETE` | `/api/teams/{id}/members/{memberId}` | Remove team member |
+
+---
+
+## 📁 Project Structure
+
+```text
+├── backend/        # Code source de l'API Spring Boot
+├── frontend/       # Code source du client (Ne pas modifier)
+└── Resources/      # Documentation, Diagrammes DB, Captures d'écran, Collections Bruno
 ```
-sofian@test.com   / password123
-alice@test.com    / password123
-bob@test.com      / password123
-shanisya@test.com / password123
-```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- API DOCUMENTATION -->
-## API Documentation
-
-Swagger UI (local):
-
-- http://localhost:8080/swagger-ui/index.html
-- http://localhost:8080/v3/api-docs
-
-Images exportées:
-
-![Swagger Users/Admin](Resources/images/api/api-docs-users-admin.jpg)
-![Swagger Posts/Teams](Resources/images/api/api-docs-posts-teams.jpg)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- DATABASE DIAGRAM -->
-## Database Diagram
-
-![DB Diagram 1](Resources/images/db/db-diagram-1.jpg)
-![DB Diagram 2](Resources/images/db/db-diagram-2.jpg)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROUTES SUMMARY -->
-## Routes Summary
-
-Auth:
-- `POST /api/register`
-- `POST /api/login`
-
-Users:
-- `GET /api/user`
-- `PUT /api/user/update`
-- `POST /api/user/avatar`
-- `DELETE /api/user`
-- `GET /api/users/search?q=`
-
-Posts:
-- `GET /api/posts`
-- `GET /api/posts?team_id=`
-- `GET /api/posts/{id}`
-- `POST /api/posts` (multipart)
-- `PUT /api/posts/{id}`
-- `DELETE /api/posts/{id}`
-
-Comments:
-- `GET /api/posts/{postId}/comments`
-- `POST /api/posts/{postId}/comments`
-- `PUT /api/comments/{id}`
-- `DELETE /api/comments/{id}`
-
-Likes:
-- `POST /api/posts/{id}/like`
-
-Teams:
-- `GET /api/teams`
-- `POST /api/teams`
-- `GET /api/teams/{id}`
-- `DELETE /api/teams/{id}`
-- `POST /api/teams/{id}/members`
-- `DELETE /api/teams/{id}/members/{memberId}`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- PROJECT STRUCTURE -->
-## Project Structure
-
-```
-backend/        -> Spring Boot API
-frontend/       -> Frontend (déjà fourni)
-Resources/      -> Docs, images, Bruno collections
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONSTRAINTS -->
-## Constraints
-
-- Frontend **strictement inchangé**
-- Contrat d'API respecté (routes + JSON)
-- Déploiement Docker (dev + prod)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
