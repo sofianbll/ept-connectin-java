@@ -1,0 +1,36 @@
+meta {
+  name: Get Feed (Posts)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/posts
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+tests {
+  test("Response must be [200]", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("Correct : Response have array with the correct relations", function() {
+    const data = res.getBody();
+    expect(data).to.be.an('array');
+    
+    if (data.length > 0) {
+      const post = data[0];
+      expect(post).to.have.property('id');
+      expect(post).to.have.property('captions');
+      expect(post).to.have.property('likes_count').that.is.a('number');
+      expect(post).to.have.property('is_liked').that.is.a('boolean');
+      expect(post).to.have.property('user');
+      expect(post.user).to.have.property('firstName');
+    }
+  });
+}

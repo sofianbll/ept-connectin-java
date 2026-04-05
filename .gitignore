@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+frontend-root/frontend/node_modules/
+
+# NPM
+npm-debug.log*
+package-lock.json
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Database
+*.sqlite
+database.sqlite
+/storage/

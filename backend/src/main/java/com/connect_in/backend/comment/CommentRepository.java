@@ -1,0 +1,22 @@
+package com.connect_in.backend.comment;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+
+    Page<Comment> findByPostIdOrderByCreatedAtAsc(Long postId, Pageable pageable);
+
+    List<Comment> findByPostIdOrderByCreatedAtAsc(Long postId);
+
+    void deleteByPostId(Long postId);
+
+    void deleteByUserId(Long userId);
+
+    long countByPostId(Long postId);
+}
