@@ -1,5 +1,6 @@
 package com.connect_in.backend.post;
 
+import com.connect_in.backend.team.Team;
 import com.connect_in.backend.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,8 +43,9 @@ public class Post {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "team_id")
-    private Long teamId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 
     @PrePersist

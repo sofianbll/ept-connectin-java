@@ -19,10 +19,10 @@ public class PostController {
 
     private final PostService postService;
 
-    // GET /api/posts?teamId= returns a List (not Page).
+    // GET /api/posts?team_id= returns a List (not Page).
     @GetMapping("/posts")
     public ResponseEntity<List<PostResponse>> getAllPosts(
-            @RequestParam(required = false) Long teamId,
+            @RequestParam(name = "team_id", required = false) Long teamId,
             @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(postService.getAllPosts(teamId, currentUser));
     }
@@ -39,7 +39,7 @@ public class PostController {
     public ResponseEntity<PostResponse> createPost(
             @RequestParam String captions,
             @RequestParam(required = false) MultipartFile image,
-            @RequestParam(required = false) Long teamId,
+            @RequestParam(name = "team_id", required = false) Long teamId,
             @AuthenticationPrincipal User currentUser) {
         PostResponse created = postService.createPost(captions, image, teamId, currentUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -51,7 +51,7 @@ public class PostController {
             @PathVariable Long id,
             @RequestParam(required = false) String captions,
             @RequestParam(required = false) MultipartFile image,
-            @RequestParam(required = false) Long teamId,
+            @RequestParam(name = "team_id", required = false) Long teamId,
             @AuthenticationPrincipal User currentUser) {
         PostResponse updated = postService.updatePost(id, captions, image, teamId, currentUser);
         return ResponseEntity.ok(updated);

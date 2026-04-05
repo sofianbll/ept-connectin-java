@@ -5,6 +5,8 @@ import com.connect_in.backend.comment.dto.CommentResponse;
 import com.connect_in.backend.like.LikeRepository;
 import com.connect_in.backend.post.dto.PostResponse;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
+import com.connect_in.backend.team.Team;
+import com.connect_in.backend.team.TeamRepository;
 import com.connect_in.backend.user.User;
 import com.connect_in.backend.user.UserMapper;
 import jakarta.transaction.Transactional;
@@ -31,6 +33,7 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
     private final UserMapper userMapper;
+    private final TeamRepository teamRepository;
 
     @Value("${storage.posts-dir:storage/posts}")
     private String postsStorageDir;
@@ -38,7 +41,7 @@ public class PostService {
     // GET /api/posts filters by teamId when provided.
     public List<PostResponse> getAllPosts(Long teamId, User currentUser) {
         List<Post> posts = (teamId != null)
-                ? postRepository.findAllByTeamIdOrderByCreatedAtDesc(teamId)
+                ? postRepository.findAllByTeam_IdOrderByCreatedAtDesc(teamId)
                 : postRepository.findAllByOrderByCreatedAtDesc();
         return posts.stream()
                 .map(post -> mapToResponse(post, currentUser))
@@ -55,10 +58,16 @@ public class PostService {
     public PostResponse createPost(String captions, MultipartFile image, Long teamId, User currentUser) {
         String imagePath = saveImage(image);
 
+        Team team = null;
+        if (teamId != null) {
+            team = teamRepository.findById(teamId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
+        }
+
         Post post = Post.builder()
                 .captions(captions)
                 .imagePath(imagePath)
-                .teamId(teamId)
+                .team(team)
                 .user(currentUser)
                 .build();
 
@@ -79,7 +88,9 @@ public class PostService {
             post.setImagePath(saveImage(image));
         }
         if (teamId != null) {
-            post.setTeamId(teamId);
+            Team team = teamRepository.findById(teamId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
+            post.setTeam(team);
         }
 
         Post updated = postRepository.save(post);

@@ -42,6 +42,14 @@ public class GlobalExceptionHandler {
                 .body(Map.of("message", ex.getMessage()));
     }
 
+    // 409 — Conflict (duplicate membership, etc.)
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Map<String, Object>> handleConflict(ConflictException ex) {
+        log.warn("Conflict: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("message", ex.getMessage()));
+    }
+
     // 422 — Domain validation error (email taken, wrong password, etc.)
     // Frontend format: { "errors": { "field": ["message"] } }
     @ExceptionHandler(ValidationException.class)
