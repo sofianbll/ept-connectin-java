@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateUserRequest {
 
-    @Email(message = "Invalid email")
+    @Email(message = "Invalid email address.")
     private String email;
 
     @Size(min = 2, max = 255)
@@ -19,4 +19,9 @@ public class UpdateUserRequest {
 
     @Size(min = 2, max = 255)
     private String lastName;
+
+    // Password change fields (optional, validated together in service).
+    private String currentPassword;
+    private String newPassword;
+    private String newPasswordConfirmation;
 }

@@ -20,7 +20,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)  // java JPA, how to store the actual object
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -30,7 +30,6 @@ public class Post {
     @Column(name = "image_path", length = 255)
     private String imagePath;
 
-    // java JPA, store the actual object
     @Column(name = "like_counter")
     private int likeCounter;
 
@@ -43,8 +42,6 @@ public class Post {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    // java JPA, store the actual object
-    // need to create Team.java after and make a link, relationship with it, with @ManyToOne
     @Column(name = "team_id")
     private Long teamId;
 

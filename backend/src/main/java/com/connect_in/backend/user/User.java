@@ -20,7 +20,7 @@ import java.util.List;
 
 public class User implements UserDetails {
 
-    //<editor-fold desc="Attributes">
+    // <editor-fold desc="Attributes">
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,12 +41,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    @Column(name = "profil_pic", length = 255)
+    private String profilPic;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

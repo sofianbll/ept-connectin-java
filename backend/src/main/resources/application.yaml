@@ -15,6 +15,16 @@ spring:
         format_sql: ${HIBERNATE_FORMAT_SQL:false}
         highlight_sql: true
 
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 jwt:
   secret: ${JWT_SECRET:dGVzdC1zZWNyZXQta2V5LWZvci1kZXZlbG9wbWVudA==}
   expiration: ${JWT_EXPIRATION:900000}

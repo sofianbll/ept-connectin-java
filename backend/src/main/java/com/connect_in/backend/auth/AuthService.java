@@ -28,11 +28,11 @@ public class AuthService {
     @Transactional
     public AuthResponse register(RegisterRequest request) {
         if (!request.getPassword().equals(request.getPasswordConfirmation())) {
-            throw new ValidationException("Les mots de passe ne correspondent pas");
+            throw new ValidationException("Passwords do not match.");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ValidationException("Email déjà utilisé : " + request.getEmail());
+            throw new ValidationException("Email already in use: " + request.getEmail());
         }
 
         User user = User.builder()
