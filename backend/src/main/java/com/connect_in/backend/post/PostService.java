@@ -4,6 +4,7 @@ import com.connect_in.backend.comment.CommentRepository;
 import com.connect_in.backend.comment.dto.CommentResponse;
 import com.connect_in.backend.like.LikeRepository;
 import com.connect_in.backend.post.dto.PostResponse;
+import com.connect_in.backend.shared.exception.ForbiddenException;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
 import com.connect_in.backend.team.Team;
 import com.connect_in.backend.team.TeamRepository;
@@ -81,6 +82,10 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
 
+        if (!post.getUser().getId().equals(currentUser.getId())) {
+            throw new ForbiddenException("You are not the author of this post.");
+        }
+
         if (captions != null && !captions.isBlank()) {
             post.setCaptions(captions);
         }
@@ -100,10 +105,14 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long id, User currentUser) {
-        if (!postRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Post not found with ID: " + id);
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
+
+        if (!post.getUser().getId().equals(currentUser.getId())) {
+            throw new ForbiddenException("You are not the author of this post.");
         }
-        postRepository.deleteById(id);
+
+        postRepository.delete(post);
         log.info("Post deleted with ID: {}", id);
     }
 
