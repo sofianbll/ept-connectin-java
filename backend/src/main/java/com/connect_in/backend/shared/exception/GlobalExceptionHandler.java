@@ -8,9 +8,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -91,6 +93,22 @@ public class GlobalExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.computeIfAbsent(fieldName, k -> new ArrayList<>()).add(errorMessage);
         });
+        return validationResponse(HttpStatus.UNPROCESSABLE_ENTITY, errors);
+    }
+
+    // 422 — Missing required request parameter
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Map<String, Object>> handleMissingRequestParam(MissingServletRequestParameterException ex) {
+        Map<String, List<String>> errors = new HashMap<>();
+        errors.put(ex.getParameterName(), List.of("This field is required."));
+        return validationResponse(HttpStatus.UNPROCESSABLE_ENTITY, errors);
+    }
+
+    // 422 — Missing required multipart part
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<Map<String, Object>> handleMissingRequestPart(MissingServletRequestPartException ex) {
+        Map<String, List<String>> errors = new HashMap<>();
+        errors.put(ex.getRequestPartName(), List.of("This field is required."));
         return validationResponse(HttpStatus.UNPROCESSABLE_ENTITY, errors);
     }
 
