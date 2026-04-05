@@ -13,6 +13,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByOrderByCreatedAtDesc();
 
+    List<Post> findAllByTeamIsNullOrderByCreatedAtDesc();
+
+    List<Post> findAllByTeamIsNullOrTeam_IdInOrderByCreatedAtDesc(List<Long> teamIds);
+
     List<Post> findAllByTeam_IdOrderByCreatedAtDesc(Long teamId);
 
     // Detach posts from a team before team deletion.

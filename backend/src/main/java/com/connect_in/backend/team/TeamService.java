@@ -68,10 +68,16 @@ public class TeamService {
         );
     }
 
-    @Cacheable(value = "teams-detail", key = "#id")
-    public TeamDetailResponse getTeamById(Long id) {
+    @Cacheable(value = "teams-detail", key = "#id + ':' + #currentUser.id")
+    public TeamDetailResponse getTeamById(Long id, User currentUser) {
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + id));
+
+        boolean isOwner = team.getOwner().getId().equals(currentUser.getId());
+        boolean isMember = teamMemberRepository.existsByTeamIdAndUserId(id, currentUser.getId());
+        if (!isOwner && !isMember) {
+            throw new ForbiddenException("You are not a member of this team.");
+        }
 
         List<TeamDetailResponse.Member> members = teamMemberRepository.findByTeamId(id).stream()
                 .map(member -> new TeamDetailResponse.Member(member.getUser().getId(), member.getUser().getFirstName()))
