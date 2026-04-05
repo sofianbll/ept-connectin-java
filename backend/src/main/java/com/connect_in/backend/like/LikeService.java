@@ -1,12 +1,10 @@
 package com.connect_in.backend.like;
 
-import com.connect_in.backend.like.dto.LikeRequest;
 import com.connect_in.backend.like.dto.LikeResponse;
-import com.connect_in.backend.like.Like;
-import com.connect_in.backend.user.User;
 import com.connect_in.backend.post.Post;
-import com.connect_in.backend.like.LikeRepository;
 import com.connect_in.backend.post.PostRepository;
+import com.connect_in.backend.shared.exception.ResourceNotFoundException;
+import com.connect_in.backend.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,43 +13,33 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-
 public class LikeService {
 
     private final LikeRepository likeRepository;
     private final PostRepository postRepository;
 
+    // Toggle : like si pas encore liké, unlike si déjà liké
     @Transactional
-    public LikeResponse likePost(LikeRequest request, User currentUser) {
-        if (likeRepository.existsByPostIdAndUserId(request.getPostId(), currentUser.getId())) {
-            throw new RuntimeException("Post déjà liked !");
+    public LikeResponse toggleLike(Long postId, User currentUser) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post non trouvé avec l'ID : " + postId));
+
+        boolean alreadyLiked = likeRepository.existsByPostIdAndUserId(postId, currentUser.getId());
+
+        if (alreadyLiked) {
+            likeRepository.deleteByPostIdAndUserId(postId, currentUser.getId());
+            log.info("Post unliké, postId={}, userId={}", postId, currentUser.getId());
+        } else {
+            Like like = Like.builder()
+                    .post(post)
+                    .user(currentUser)
+                    .build();
+            likeRepository.save(like);
+            log.info("Post liké, postId={}, userId={}", postId, currentUser.getId());
         }
-        Post post = postRepository.findById(request.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post n'as pas trouvé avec l'ID : " + request.getPostId()));
-                Like like = Like.builder()
-                        .post(post)
-                        .user(currentUser)
-                        .build();
-                Like saved = likeRepository.save(like);
-                    log.info("Post liké succès, ID : {}", saved.getId());
-                    return mapToResponse(saved);
-    }
 
-    @Transactional
-    public void unlikePost(Long postId, User currentUser) {
-        if (!likeRepository.existsByPostIdAndUserId(postId, currentUser.getId())) {
-            throw new RuntimeException("Like non trouvé");
-        }
-        likeRepository.deleteByPostIdAndUserId(postId, currentUser.getId());
-            log.info("Post unliké succès, Id : {}", postId);
+        boolean nowLiked = !alreadyLiked;
+        int likesCount = likeRepository.countByPostId(postId);
+        return new LikeResponse(nowLiked, likesCount);
     }
-
-    private LikeResponse mapToResponse(Like like) {
-        LikeResponse response = new LikeResponse();
-            response.setId(like.getId());
-            response.setPostId(like.getPost().getId());
-            response.setUserId(like.getUser().getId());
-            return response;
-    }
-
 }

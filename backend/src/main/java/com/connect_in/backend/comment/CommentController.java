@@ -19,29 +19,39 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    // GET /api/posts/{postId}/comments — liste paginée (usage interne / debug)
     @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity<Page<CommentResponse>> getCommentsByPost(@PathVariable Long postId, Pageable pageable, @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Page<CommentResponse>> getCommentsByPost(
+            @PathVariable Long postId,
+            Pageable pageable,
+            @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(commentService.getCommentsByPost(postId, pageable, currentUser));
     }
 
-    @GetMapping("/posts/{postId}/comments/{id}")
-    public ResponseEntity<CommentResponse> getCommentById(@PathVariable Long postId, @PathVariable Long id, @AuthenticationPrincipal User currentUser) {
-        return ResponseEntity.ok(commentService.getCommentsById(id, currentUser));
-    }
-
+    // POST /api/posts/{postId}/comments — créer un comment
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<CommentResponse> createComment(@PathVariable Long postId, @Valid @RequestBody CommentRequest request, @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<CommentResponse> createComment(
+            @PathVariable Long postId,
+            @Valid @RequestBody CommentRequest request,
+            @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(commentService.createComment(postId, request, currentUser));
     }
 
-    @PutMapping("/posts/{postId}/comments/{id}")
-    public ResponseEntity<CommentResponse> updateComment(@PathVariable Long postId, @PathVariable Long id, @Valid @RequestBody CommentRequest request, @AuthenticationPrincipal User currentUser) {
+    // PUT /api/comments/{id} — frontend (route directe, sans postId)
+    @PutMapping("/comments/{id}")
+    public ResponseEntity<CommentResponse> updateComment(
+            @PathVariable Long id,
+            @Valid @RequestBody CommentRequest request,
+            @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(commentService.updateComment(id, request, currentUser));
     }
 
-    @DeleteMapping("/posts/{postId}/comments/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long postId, @PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+    // DELETE /api/comments/{id} — frontend (route directe, sans postId)
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<Void> deleteComment(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User currentUser) {
         commentService.deleteComment(id, currentUser);
         return ResponseEntity.noContent().build();
     }
