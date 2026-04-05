@@ -39,8 +39,10 @@ public class TeamController {
 
     // GET /api/teams/{id} returns team details.
     @GetMapping("/teams/{id}")
-    public ResponseEntity<TeamDetailResponse> getTeamById(@PathVariable Long id) {
-        return ResponseEntity.ok(teamService.getTeamById(id));
+    public ResponseEntity<TeamDetailResponse> getTeamById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(teamService.getTeamById(id, currentUser));
     }
 
     // DELETE /api/teams/{id} deletes a team.

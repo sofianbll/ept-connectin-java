@@ -4,9 +4,11 @@ import com.connect_in.backend.comment.CommentRepository;
 import com.connect_in.backend.comment.dto.CommentResponse;
 import com.connect_in.backend.like.LikeRepository;
 import com.connect_in.backend.post.dto.PostResponse;
+import com.connect_in.backend.post.dto.PostUpdateRequest;
 import com.connect_in.backend.shared.exception.ForbiddenException;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
 import com.connect_in.backend.team.Team;
+import com.connect_in.backend.team.TeamMemberRepository;
 import com.connect_in.backend.team.TeamRepository;
 import com.connect_in.backend.user.User;
 import com.connect_in.backend.user.UserMapper;
@@ -35,15 +37,30 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final UserMapper userMapper;
     private final TeamRepository teamRepository;
+    private final TeamMemberRepository teamMemberRepository;
 
     @Value("${storage.posts-dir:storage/posts}")
     private String postsStorageDir;
 
     // GET /api/posts filters by teamId when provided.
     public List<PostResponse> getAllPosts(Long teamId, User currentUser) {
-        List<Post> posts = (teamId != null)
-                ? postRepository.findAllByTeam_IdOrderByCreatedAtDesc(teamId)
-                : postRepository.findAllByOrderByCreatedAtDesc();
+        List<Post> posts;
+        if (teamId != null) {
+            Team team = teamRepository.findById(teamId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
+            assertTeamMember(team, currentUser);
+            posts = postRepository.findAllByTeam_IdOrderByCreatedAtDesc(teamId);
+        } else {
+            List<Long> teamIds = teamMemberRepository.findByUserId(currentUser.getId())
+                    .stream()
+                    .map(member -> member.getTeam().getId())
+                    .toList();
+            if (teamIds.isEmpty()) {
+                posts = postRepository.findAllByTeamIsNullOrderByCreatedAtDesc();
+            } else {
+                posts = postRepository.findAllByTeamIsNullOrTeam_IdInOrderByCreatedAtDesc(teamIds);
+            }
+        }
         return posts.stream()
                 .map(post -> mapToResponse(post, currentUser))
                 .collect(Collectors.toList());
@@ -52,18 +69,22 @@ public class PostService {
     public PostResponse getPostById(Long id, User currentUser) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
+        if (post.getTeam() != null) {
+            assertTeamMember(post.getTeam(), currentUser);
+        }
         return mapToResponse(post, currentUser);
     }
 
     @Transactional
     public PostResponse createPost(String captions, MultipartFile image, Long teamId, User currentUser) {
-        String imagePath = saveImage(image);
-
         Team team = null;
         if (teamId != null) {
             team = teamRepository.findById(teamId)
                     .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
+            assertTeamMember(team, currentUser);
         }
+
+        String imagePath = saveImage(image);
 
         Post post = Post.builder()
                 .captions(captions)
@@ -78,7 +99,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long id, String captions, MultipartFile image, Long teamId, User currentUser) {
+    public PostResponse updatePost(Long id, PostUpdateRequest request, User currentUser) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + id));
 
@@ -86,16 +107,8 @@ public class PostService {
             throw new ForbiddenException("You are not the author of this post.");
         }
 
-        if (captions != null && !captions.isBlank()) {
-            post.setCaptions(captions);
-        }
-        if (image != null && !image.isEmpty()) {
-            post.setImagePath(saveImage(image));
-        }
-        if (teamId != null) {
-            Team team = teamRepository.findById(teamId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + teamId));
-            post.setTeam(team);
+        if (request.getCaptions() != null && !request.getCaptions().isBlank()) {
+            post.setCaptions(request.getCaptions());
         }
 
         Post updated = postRepository.save(post);
@@ -161,11 +174,19 @@ public class PostService {
             Path filePath = dir.resolve(filename);
             Files.write(filePath, image.getBytes());
 
-            // Return a public path under /storage/posts.
-            return "/storage/posts/" + filename;
+            // Return relative path — frontend prepends http://localhost:8080/storage/
+            return "posts/" + filename;
         } catch (IOException e) {
             log.error("Failed to save image: {}", e.getMessage());
             throw new RuntimeException("Failed to save image.", e);
+        }
+    }
+
+    private void assertTeamMember(Team team, User currentUser) {
+        boolean isMember = team.getOwner().getId().equals(currentUser.getId())
+                || teamMemberRepository.existsByTeamIdAndUserId(team.getId(), currentUser.getId());
+        if (!isMember) {
+            throw new ForbiddenException("You are not a member of this team.");
         }
     }
 }

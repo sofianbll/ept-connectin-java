@@ -23,7 +23,10 @@ services:
   backend-service:
     build:
       context: ./backend
+    image: ${API_IMAGE_NAME}:latest
     container_name: ${PROJECT_NAME}-api
+    volumes:
+      - ./storage:/app/storage
     depends_on:
       db-service:
         condition: service_healthy
@@ -41,6 +44,7 @@ services:
   frontend-service:
     build:
       context: ./frontend/frontend
+    image: ${FRONT_IMAGE_NAME}:latest
     container_name: ${PROJECT_NAME}-ui
     ports:
       - "${FRONT_PORT_EXTERNAL}:${FRONT_PORT_INTERNAL}"

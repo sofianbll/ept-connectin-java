@@ -24,11 +24,13 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
+    image: ${API_IMAGE_NAME}:dev
     container_name: ${PROJECT_NAME}-api
     volumes:
       - ./backend/src:/app/src
       - ./backend/pom.xml:/app/pom.xml
       - maven-cache:/root/.m2
+      - ./storage:/app/storage
     depends_on:
       db-service:
         condition: service_healthy
@@ -47,6 +49,7 @@ services:
   frontend-service:
     build:
       context: ./frontend/frontend
+    image: ${FRONT_IMAGE_NAME}:dev
     container_name: ${PROJECT_NAME}-ui
     ports:
       - "${FRONT_PORT_EXTERNAL}:${FRONT_PORT_INTERNAL}"
