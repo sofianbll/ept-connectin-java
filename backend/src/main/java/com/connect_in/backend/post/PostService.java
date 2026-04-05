@@ -161,8 +161,8 @@ public class PostService {
             Path filePath = dir.resolve(filename);
             Files.write(filePath, image.getBytes());
 
-            // Return a public path under /storage/posts.
-            return "/storage/posts/" + filename;
+            // Return relative path — frontend prepends http://localhost:8080/storage/
+            return "posts/" + filename;
         } catch (IOException e) {
             log.error("Failed to save image: {}", e.getMessage());
             throw new RuntimeException("Failed to save image.", e);

@@ -24,6 +24,8 @@ services:
     build:
       context: ./backend
     container_name: ${PROJECT_NAME}-api
+    volumes:
+      - ./storage:/app/storage
     depends_on:
       db-service:
         condition: service_healthy

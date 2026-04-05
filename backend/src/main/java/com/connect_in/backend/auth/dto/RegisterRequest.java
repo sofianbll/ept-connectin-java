@@ -9,9 +9,11 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
+    @JsonProperty("firstName")
     @NotBlank(message = "First name is required.")
     private String firstName;
 
+    @JsonProperty("lastName")
     @NotBlank(message = "Last name is required.")
     private String lastName;
 

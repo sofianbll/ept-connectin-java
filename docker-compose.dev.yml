@@ -29,6 +29,7 @@ services:
       - ./backend/src:/app/src
       - ./backend/pom.xml:/app/pom.xml
       - maven-cache:/root/.m2
+      - ./storage:/app/storage
     depends_on:
       db-service:
         condition: service_healthy

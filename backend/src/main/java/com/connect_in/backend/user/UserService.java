@@ -185,6 +185,7 @@ public class UserService {
             Path filePath = dir.resolve(filename);
             Files.write(filePath, file.getBytes());
 
+            // Return relative path — frontend prepends http://localhost:8080{profil_pic}
             return "/storage/avatars/" + filename;
         } catch (IOException e) {
             log.error("Failed to save avatar: {}", e.getMessage());
