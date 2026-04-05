@@ -1,16 +1,16 @@
 package com.connect_in.backend.post;
 
-import com.connect_in.backend.post.dto.PostRequest;
 import com.connect_in.backend.post.dto.PostResponse;
 import com.connect_in.backend.user.User;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -19,31 +19,48 @@ public class PostController {
 
     private final PostService postService;
 
+    // GET /api/posts?teamId=  → retourne List<> (pas Page<>) — contrat frontend
     @GetMapping("/posts")
-    public ResponseEntity<Page<PostResponse>> getAllPosts(Pageable pageable, @AuthenticationPrincipal User currentUser) {
-        return ResponseEntity.ok(postService.getAllPosts(pageable, currentUser));
+    public ResponseEntity<List<PostResponse>> getAllPosts(
+            @RequestParam(required = false) Long teamId,
+            @AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(postService.getAllPosts(teamId, currentUser));
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostResponse> getPostById(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
-        PostResponse post = postService.getPostById(id, currentUser);
-        return ResponseEntity.ok(post);
+    public ResponseEntity<PostResponse> getPostById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(postService.getPostById(id, currentUser));
     }
 
-    @PostMapping("/posts")
-    public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequest request, @AuthenticationPrincipal User currentUser) {
-        PostResponse createdPost = postService.createPost(request, currentUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
+    // POST /api/posts — multipart/form-data (captions + image optionnelle + teamId optionnel)
+    @PostMapping(value = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PostResponse> createPost(
+            @RequestParam String captions,
+            @RequestParam(required = false) MultipartFile image,
+            @RequestParam(required = false) Long teamId,
+            @AuthenticationPrincipal User currentUser) {
+        PostResponse created = postService.createPost(captions, image, teamId, currentUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @PutMapping("/posts/{id}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @Valid @RequestBody PostRequest request, @AuthenticationPrincipal User currentUser) {
-        PostResponse updatedPost = postService.updatePost(id, request, currentUser);
-        return ResponseEntity.ok(updatedPost);
+    // PUT /api/posts/{id} — multipart/form-data
+    @PutMapping(value = "/posts/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PostResponse> updatePost(
+            @PathVariable Long id,
+            @RequestParam(required = false) String captions,
+            @RequestParam(required = false) MultipartFile image,
+            @RequestParam(required = false) Long teamId,
+            @AuthenticationPrincipal User currentUser) {
+        PostResponse updated = postService.updatePost(id, captions, image, teamId, currentUser);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Void> deletePost(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User currentUser) {
         postService.deletePost(id, currentUser);
         return ResponseEntity.noContent().build();
     }

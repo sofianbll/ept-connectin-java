@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
     private Long id;
     private String text;
-    private UserDTO author;
+    // "user" et non "author" — contrat frontend
+    private UserDTO user;
     private LocalDateTime createdAt;
 }
