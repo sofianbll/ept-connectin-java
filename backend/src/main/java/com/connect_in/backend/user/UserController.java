@@ -45,9 +45,12 @@ public class UserController {
 
     // DELETE /api/user deletes the current user's account.
     @DeleteMapping("/user")
-    public ResponseEntity<Map<String, Boolean>> deleteAccount(@AuthenticationPrincipal User currentUser) {
-        userService.deleteAccount(currentUser);
-        return ResponseEntity.ok(Map.of("delete_content", true));
+    public ResponseEntity<Map<String, Boolean>> deleteAccount(
+            @AuthenticationPrincipal User currentUser,
+            @RequestBody(required = false) Map<String, Boolean> payload) {
+        Boolean deleteContent = payload != null ? payload.get("delete_content") : null;
+        userService.deleteAccount(currentUser, deleteContent);
+        return ResponseEntity.ok(Map.of("delete_content", deleteContent != null ? deleteContent : true));
     }
 
     // GET /api/users/search?q= searches users by first or last name.

@@ -1,7 +1,12 @@
 package com.connect_in.backend.user;
 
+import com.connect_in.backend.comment.CommentRepository;
+import com.connect_in.backend.like.LikeRepository;
+import com.connect_in.backend.post.PostRepository;
 import com.connect_in.backend.shared.exception.ResourceNotFoundException;
 import com.connect_in.backend.shared.exception.ValidationException;
+import com.connect_in.backend.team.TeamMemberRepository;
+import com.connect_in.backend.team.TeamRepository;
 import com.connect_in.backend.user.dto.AvatarResponse;
 import com.connect_in.backend.user.dto.CreateUserRequest;
 import com.connect_in.backend.user.dto.UpdateUserRequest;
@@ -35,6 +40,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
+    private final TeamMemberRepository teamMemberRepository;
+    private final TeamRepository teamRepository;
 
     @Value("${storage.avatars-dir:storage/avatars}")
     private String avatarsStorageDir;
@@ -106,10 +116,24 @@ public class UserService {
 
     // DELETE /api/user deletes the current user's account.
     @Transactional
-    public void deleteAccount(User currentUser) {
-        log.info("Deleting account for user ID: {}", currentUser.getId());
-        userRepository.deleteById(currentUser.getId());
-        log.info("Account deleted successfully.");
+    public void deleteAccount(User currentUser, Boolean deleteContent) {
+        boolean shouldDeleteContent = deleteContent != null ? deleteContent : true;
+        log.info("Deleting account for user ID: {}, deleteContent={}", currentUser.getId(), shouldDeleteContent);
+
+        User user = userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+        if (shouldDeleteContent) {
+            deleteUserContent(user.getId());
+            userRepository.delete(user);
+            log.info("Account deleted with content for user ID: {}", user.getId());
+            return;
+        }
+
+        likeRepository.deleteByUserId(user.getId());
+        teamMemberRepository.deleteByUserId(user.getId());
+        anonymizeUser(user);
+        log.info("Account anonymized for user ID: {}", user.getId());
     }
 
     // GET /api/users/search?q= searches by first or last name.
@@ -191,5 +215,33 @@ public class UserService {
             log.error("Failed to save avatar: {}", e.getMessage());
             throw new RuntimeException("Failed to save avatar.", e);
         }
+    }
+
+    private void deleteUserContent(Long userId) {
+        teamRepository.findByOwnerId(userId)
+                .forEach(team -> {
+                    postRepository.detachFromTeam(team.getId());
+                    teamMemberRepository.deleteByTeamId(team.getId());
+                    teamRepository.delete(team);
+                });
+
+        likeRepository.deleteByUserId(userId);
+        postRepository.findAllByUserId(userId)
+                .forEach(post -> {
+                    likeRepository.deleteByPostId(post.getId());
+                    commentRepository.deleteByPostId(post.getId());
+                });
+        commentRepository.deleteByUserId(userId);
+        postRepository.deleteByUserId(userId);
+        teamMemberRepository.deleteByUserId(userId);
+    }
+
+    private void anonymizeUser(User user) {
+        user.setEmail("deleted_" + user.getId() + "@example.com");
+        user.setFirstName("Deleted");
+        user.setLastName("User");
+        user.setProfilPic(null);
+        user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
+        userRepository.save(user);
     }
 }

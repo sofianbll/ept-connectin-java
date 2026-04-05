@@ -19,6 +19,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByTeam_IdOrderByCreatedAtDesc(Long teamId);
 
+    List<Post> findAllByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
+
     // Detach posts from a team before team deletion.
     @Modifying
     @Query("UPDATE Post p SET p.team = null WHERE p.team.id = :teamId")
