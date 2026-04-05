@@ -41,6 +41,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    @Column(name = "profil_pic", length = 255)
+    private String profilPic;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

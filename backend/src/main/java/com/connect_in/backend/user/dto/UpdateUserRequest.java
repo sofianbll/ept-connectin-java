@@ -19,4 +19,9 @@ public class UpdateUserRequest {
 
     @Size(min = 2, max = 255)
     private String lastName;
+
+    // Changement de mot de passe (tous optionnels, mais validés ensemble en service)
+    private String currentPassword;
+    private String newPassword;
+    private String newPasswordConfirmation;
 }
