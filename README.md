@@ -4,52 +4,67 @@
   <h1>Connect'In v2 — Spring Boot API</h1>
 
   <p>
-    <strong>Migration complète du backend Laravel vers Spring Boot.</strong><br>
-    <em>Même frontend, nouvelle puissance sous le capot.</em>
+    <strong>Migration complete du backend Laravel vers Spring Boot.</strong><br>
+    <em>Meme frontend, nouvelle puissance sous le capot.</em>
   </p>
 
   <p>
-    <a href="#-getting-started">Installation</a> •
-    <a href="#-api-documentation">Documentation API</a> •
-    <a href="#-api-routes">Endpoints</a>
+    <a href="#stack-technique">Stack Technique</a> •
+    <a href="#getting-started">Installation</a> •
+    <a href="#api-documentation">Documentation</a> •
+    <a href="#api-routes">Endpoints</a>
   </p>
 </div>
 
-<br>
-
-> **⚠️ Contrainte Majeure :** Le frontend fourni doit rester **strictement inchangé**. L'objectif de cette API est de reproduire fidèlement les routes et payloads attendus par le client existant, tout en améliorant la robustesse, la sécurité et la structure du code via Java Spring Boot.
+> [!IMPORTANT]
+> **Contrainte Majeure :** Le frontend fourni doit rester **strictement inchange**.
+> L'objectif de cette API est de reproduire fidelement les routes et payloads attendus par le client existant, tout en ameliorant la robustesse, la securite et la structure du code via Java Spring Boot.
 
 ---
 
 ## 🛠️ Stack Technique
 
-<p align="center">
+<div align="center">
   <img src="https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25">
   <img src="https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=for-the-badge&logo=Spring-Boot&logoColor=white" alt="Spring Boot 4">
   <img src="https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8.4">
   <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white" alt="Maven">
-</p>
+</div>
 
 ---
 
 ## ✨ Features & Architecture
 
-### Fonctionnalités Clés
-* **Authentification** : JWT (Register/Login) sécurisé par Spring Security.
-* **Utilisateurs** : Profil, upload d'avatar, recherche, suppression/anonymisation.
-* **Social** : CRUD des Posts (avec images et gestion d'équipe), Commentaires et Likes.
-* **Équipes** : Création, gestion des membres et des rôles.
-* **Data** : Seeders de données idempotents pour une démo immédiate.
+<table width="100%">
+  <tr>
+    <td valign="top" width="50%">
+      <h3>🎯 Fonctionnalites Cles</h3>
+      <ul>
+        <li><b>Authentification</b> : JWT (Register/Login) securise par Spring Security.</li>
+        <li><b>Utilisateurs</b> : Profil, upload d'avatar, recherche, suppression/anonymisation.</li>
+        <li><b>Social</b> : CRUD des posts (avec images et gestion d'equipe), commentaires et likes.</li>
+        <li><b>Equipes</b> : Creation, gestion des membres et des roles.</li>
+        <li><b>Data</b> : Seeders de donnees idempotents pour une demo immediate.</li>
+      </ul>
+    </td>
+    <td valign="top" width="50%">
+      <h3>🚀 Les Plus (Bonus)</h3>
+      <ul>
+        <li>Cache applicatif avec Spring (<code>@Cacheable</code> / <code>@CacheEvict</code>).</li>
+        <li>Tests unitaires couverts par JUnit + Mockito.</li>
+        <li>Gestion d'erreurs JSON uniformisee et globale.</li>
+        <li>Conteneurisation complete (Dev & Prod) pilotee par Makefile.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-### 🚀 Les "Plus" (Bonus)
-* Cache applicatif avec Spring (`@Cacheable` / `@CacheEvict`).
-* Tests unitaires couverts par JUnit + Mockito.
-* Gestion d'erreurs JSON uniformisée et globale.
-* Conteneurisation complète (Dev & Prod) pilotée par Makefile.
+<details>
+  <summary><b>🏗️ Voir l'Architecture (Modular Monolith)</b></summary>
 
-### 🏗️ Architecture (Modular Monolith)
-L'application est structurée par **domaine métier**, isolant chaque composant (Controller, Service, Repository, DTO) dans un module cohérent tout en conservant un déploiement unique :
+L'application est structuree par domaine metier, isolant chaque composant (Controller, Service, Repository, DTO) dans un module coherent tout en conservant un deploiement unique :
+
 ```text
 backend/src/main/java/com/connect_in/backend/
  ├── auth/
@@ -61,129 +76,221 @@ backend/src/main/java/com/connect_in/backend/
  └── shared/
 ```
 
+</details>
+
 ---
 
 ## 🚀 Getting Started
 
-### Prérequis
+### ⚙️ Prerequisites
 
-- **Docker Desktop** (pour la BDD et le déploiement)
+- **Docker Desktop** (pour la BDD et le deploiement)
 - **Node.js** (pour lancer le frontend fourni)
 
-### Installation rapide
+### 📥 Quick Start
 
 ```bash
 git clone <PRIVATE_REPO_URL>
 cd connect-in-java
 ```
 
-### Commandes (Makefile)
+### 🛠️ Commands
 
-Un `Makefile` est fourni pour simplifier l'expérience développeur (DX).
+Un `Makefile` est fourni pour simplifier l'experience developpeur (DX).
 
-| Commande | Description |
-|:---:|:---:|
-| `make dev` | Lance l'environnement de développement (avec Hot-Reload) |
-| `make prod` | Lance l'environnement de production |
-| `make down` / `make down-dev` | Stoppe les conteneurs (Prod / Dev) |
-| `make reset` / `make reset-dev`| Réinitialise la base de données (Prod / Dev) |
-| `make clean` | Purge les images et les volumes Docker |
-| `make logs` / `make logs-db` | Affiche les logs en direct (Backend / BDD) |
+<table width="100%">
+  <tr>
+    <th width="30%">Commande</th>
+    <th width="70%">Description</th>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make dev</kbd></td>
+    <td>Lance l'environnement de developpement (avec hot-reload)</td>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make prod</kbd></td>
+    <td>Lance l'environnement de production</td>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make down</kbd> / <kbd>make down-dev</kbd></td>
+    <td>Stoppe les conteneurs (Prod / Dev)</td>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make reset</kbd> / <kbd>make reset-dev</kbd></td>
+    <td>Reinitialise la base de donnees (Prod / Dev)</td>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make clean</kbd></td>
+    <td>Purge les images et les volumes Docker</td>
+  </tr>
+  <tr>
+    <td align="center"><kbd>make logs</kbd> / <kbd>make logs-db</kbd></td>
+    <td>Affiche les logs en direct (Backend / BDD)</td>
+  </tr>
+</table>
 
-*Alternative sans Makefile :*
+<details>
+  <summary><b>Alternative sans Makefile (Docker Compose)</b></summary>
 
 ```bash
-# Développement
+# Development
 docker compose -f docker-compose.dev.yml up --build --force-recreate
 
 # Production
 docker compose up --build --force-recreate
 ```
 
+</details>
+
 ---
 
 ## 🔑 Seed Accounts
 
-Pour tester l'application immédiatement, utilisez ces comptes générés par les seeders :
+Pour tester l'application immediatement, utilisez ces comptes generes par les seeders :
 
-* 📧 `sofian@test.com` | 🔒 `password123`
-* 📧 `alice@test.com` | 🔒 `password123`
-* 📧 `bob@test.com` | 🔒 `password123`
-* 📧 `shanisya@test.com` | 🔒 `password123`
+| Email | Password |
+|---|---|
+| `sofian@test.com` | `password123` |
+| `alice@test.com` | `password123` |
+| `bob@test.com` | `password123` |
+| `shanisya@test.com` | `password123` |
 
 ---
 
 ## 📚 API Documentation
 
-Une fois l'application lancée, l'interface **Swagger UI** est disponible en local pour tester les routes :
+Une fois l'application lancee, l'interface Swagger UI est disponible en local pour tester les routes.
 
-| Type | Ressource | Lien |
-|:---:|:---:|:---:|
-| Swagger local | UI interactive | [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) |
-| Swagger local | JSON brut (OpenAPI) | [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) |
-| Aperçu API | Users / Admin | [Resources/images/api/api-docs-users-admin.jpg](Resources/images/api/api-docs-users-admin.jpg) |
-| Aperçu API | Posts / Teams | [Resources/images/api/api-docs-posts-teams.jpg](Resources/images/api/api-docs-posts-teams.jpg) |
-| Export documentation | PDF API | [Resources/docs/ApiDocumentation.pdf](Resources/docs/ApiDocumentation.pdf) |
-| Export documentation | Markdown API | [Resources/notes/ApiDocumentation.md](Resources/notes/ApiDocumentation.md) |
+<table width="100%">
+  <tr>
+    <th>Type</th>
+    <th>Ressource</th>
+    <th>Lien / Fichier</th>
+  </tr>
+  <tr>
+    <td>Swagger local</td>
+    <td>UI interactive</td>
+    <td><a href="http://localhost:8080/swagger-ui/index.html">http://localhost:8080/swagger-ui/index.html</a></td>
+  </tr>
+  <tr>
+    <td>Swagger local</td>
+    <td>JSON brut (OpenAPI)</td>
+    <td><a href="http://localhost:8080/v3/api-docs">http://localhost:8080/v3/api-docs</a></td>
+  </tr>
+  <tr>
+    <td>Apercu API</td>
+    <td>Users / Admin</td>
+    <td><a href="Resources/images/api/api-docs-users-admin.jpg">Voir l'image</a></td>
+  </tr>
+  <tr>
+    <td>Apercu API</td>
+    <td>Posts / Teams</td>
+    <td><a href="Resources/images/api/api-docs-posts-teams.jpg">Voir l'image</a></td>
+  </tr>
+</table>
 
-### 📄 Documentation Projet
+<details>
+  <summary><b>📄 Voir les exports de documentation (PDF / Markdown)</b></summary>
 
-| Document | Format PDF | Format Markdown |
-|:---:|:---:|:---:|
-| Connect'In Version 2 | [Resources/docs/ConnectInVersion2.pdf](Resources/docs/ConnectInVersion2.pdf) | [Resources/notes/ConnectInVersion2.md](Resources/notes/ConnectInVersion2.md) |
-| Sujet du projet | [Resources/docs/project.pdf](Resources/docs/project.pdf) | [Resources/notes/project.md](Resources/notes/project.md) |
+<table width="100%">
+  <tr>
+    <th width="33%">Document</th>
+    <th width="33%">Format PDF</th>
+    <th width="33%">Format Markdown</th>
+  </tr>
+  <tr>
+    <td align="center"><b>API Documentation</b></td>
+    <td align="center"><a href="Resources/docs/ApiDocumentation.pdf">📄 API.pdf</a></td>
+    <td align="center"><a href="Resources/notes/ApiDocumentation.md">📝 API.md</a></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Connect'In Version 2</b></td>
+    <td align="center"><a href="Resources/docs/ConnectInVersion2.pdf">📄 V2.pdf</a></td>
+    <td align="center"><a href="Resources/notes/ConnectInVersion2.md">📝 V2.md</a></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Sujet du projet</b></td>
+    <td align="center"><a href="Resources/docs/project.pdf">📄 Sujet.pdf</a></td>
+    <td align="center"><a href="Resources/notes/project.md">📝 Sujet.md</a></td>
+  </tr>
+</table>
+
+</details>
 
 ---
 
 ## 🗄️ Database Diagram
 
-<p align="center">
+<div align="center">
   <img src="Resources/images/db/db-diagram-1.jpg" alt="Database Diagram" width="900">
-</p>
-
-Vue alternative : [Resources/images/db/db-diagram-2.jpg](Resources/images/db/db-diagram-2.jpg)
+  <p><em>Vue alternative disponible <a href="Resources/images/db/db-diagram-2.jpg">ici</a>.</em></p>
+</div>
 
 ---
 
 ## 🛣️ API Routes
 
-### 🔐 Auth & Users
+<details>
+  <summary><b>🔐 Auth & Users</b></summary>
 
-| Method | Endpoint | Description |
-|:---:|:---:|:---:|
-| `POST` | `/api/register` | Create account |
-| `POST` | `/api/login` | Get JWT token |
-| `GET` | `/api/user` | Get current user profile |
-| `PUT` | `/api/user/update` | Update profile |
-| `POST` | `/api/user/avatar` | Upload avatar |
-| `DELETE` | `/api/user` | Delete account |
-| `GET` | `/api/users/search?q=` | Search users |
+<table width="100%">
+  <tr>
+    <th width="15%">Method</th>
+    <th width="45%">Endpoint</th>
+    <th width="40%">Description</th>
+  </tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/register</code></td><td>Create account</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/login</code></td><td>Get JWT token</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/user</code></td><td>Get current user profile</td></tr>
+  <tr><td align="center"><code>PUT</code></td><td><code>/api/user/update</code></td><td>Update profile</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/user/avatar</code></td><td>Upload avatar</td></tr>
+  <tr><td align="center"><code>DELETE</code></td><td><code>/api/user</code></td><td>Delete account</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/users/search?q=</code></td><td>Search users</td></tr>
+</table>
 
-### 📝 Posts & Comments
+</details>
 
-| Method | Endpoint | Description |
-|:---:|:---:|:---:|
-| `GET` | `/api/posts` | List posts (supports `?team_id=` filter) |
-| `GET` | `/api/posts/{id}` | Get post details |
-| `POST` | `/api/posts` | Create post (`multipart`) |
-| `PUT` | `/api/posts/{id}` | Update post |
-| `DELETE` | `/api/posts/{id}` | Delete post |
-| `GET` | `/api/posts/{postId}/comments` | List post comments |
-| `POST` | `/api/posts/{postId}/comments` | Add comment |
-| `PUT` | `/api/comments/{id}` | Update comment |
-| `DELETE` | `/api/comments/{id}` | Delete comment |
+<details>
+  <summary><b>📝 Posts & Comments</b></summary>
 
-### ❤️ Likes & 🛡️ Teams
+<table width="100%">
+  <tr>
+    <th width="15%">Method</th>
+    <th width="45%">Endpoint</th>
+    <th width="40%">Description</th>
+  </tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/posts</code></td><td>List posts (supports <code>?team_id=</code> filter)</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/posts/{id}</code></td><td>Get post details</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/posts</code></td><td>Create post (<code>multipart</code>)</td></tr>
+  <tr><td align="center"><code>PUT</code></td><td><code>/api/posts/{id}</code></td><td>Update post</td></tr>
+  <tr><td align="center"><code>DELETE</code></td><td><code>/api/posts/{id}</code></td><td>Delete post</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/posts/{postId}/comments</code></td><td>List post comments</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/posts/{postId}/comments</code></td><td>Add comment</td></tr>
+  <tr><td align="center"><code>PUT</code></td><td><code>/api/comments/{id}</code></td><td>Update comment</td></tr>
+  <tr><td align="center"><code>DELETE</code></td><td><code>/api/comments/{id}</code></td><td>Delete comment</td></tr>
+</table>
 
-| Method | Endpoint | Description |
-|:---:|:---:|:---:|
-| `POST` | `/api/posts/{id}/like` | Toggle like status |
-| `GET` | `/api/teams` | List teams |
-| `POST` | `/api/teams` | Create team |
-| `GET` | `/api/teams/{id}` | Get team details |
-| `DELETE` | `/api/teams/{id}` | Delete team |
-| `POST` | `/api/teams/{id}/members` | Add team member |
-| `DELETE` | `/api/teams/{id}/members/{memberId}` | Remove team member |
+</details>
+
+<details>
+  <summary><b>❤️ Likes & 🛡️ Teams</b></summary>
+
+<table width="100%">
+  <tr>
+    <th width="15%">Method</th>
+    <th width="45%">Endpoint</th>
+    <th width="40%">Description</th>
+  </tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/posts/{id}/like</code></td><td>Toggle like status</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/teams</code></td><td>List teams</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/teams</code></td><td>Create team</td></tr>
+  <tr><td align="center"><code>GET</code></td><td><code>/api/teams/{id}</code></td><td>Get team details</td></tr>
+  <tr><td align="center"><code>DELETE</code></td><td><code>/api/teams/{id}</code></td><td>Delete team</td></tr>
+  <tr><td align="center"><code>POST</code></td><td><code>/api/teams/{id}/members</code></td><td>Add team member</td></tr>
+  <tr><td align="center"><code>DELETE</code></td><td><code>/api/teams/{id}/members/{memberId}</code></td><td>Remove team member</td></tr>
+</table>
+
+</details>
 
 ---
 
@@ -192,6 +299,5 @@ Vue alternative : [Resources/images/db/db-diagram-2.jpg](Resources/images/db/db-
 ```text
 ├── backend/        # Code source de l'API Spring Boot
 ├── frontend/       # Code source du client (Ne pas modifier)
-└── Resources/      # Documentation, Diagrammes DB, Captures d'écran, Collections Bruno
+└── Resources/      # Documentation, Diagrammes DB, Captures d'ecran, Collections Bruno
 ```
-
