@@ -12,7 +12,9 @@
 
 <br>
 
-<img src="assets/logo.svg" alt="Connect'In Logo" width="300">
+<p align="center">
+  <img src="assets/logo.svg" alt="Connect'In Logo" width="160"/>
+</p>
 
 <h1 id="readme-top">Connect'In v2 — Spring Boot API</h1>
 
@@ -22,6 +24,18 @@
 </p>
 
 <p align="center">🇬🇧 <a href="README.md"><b>English</b></a> · 🇫🇷 <a href="README.fr.md">Français</a></p>
+
+<br>
+
+<p align="center">
+  <a href="https://sofian-bll.github.io/ept-connectin-java/"><strong>Explore the docs</strong></a>
+  ·
+  <a href="https://sofian-bll.github.io/ept-connectin-java/"><strong>View Demo</strong></a>
+  ·
+  <a href="https://github.com/sofian-bll/ept-connectin-java/issues/new"><strong>Report Bug</strong></a>
+  ·
+  <a href="https://github.com/sofian-bll/ept-connectin-java/issues/new"><strong>Request Feature</strong></a>
+</p>
 
 </div>
 
@@ -59,8 +73,11 @@ The goal: reproduce every route and payload faithfully while improving robustnes
 - [API Documentation](#api-documentation)
 - [API Routes](#api-routes)
 - [Database Diagram](#database-diagram)
+- [Demo](#demo)
 - [Project Structure](#project-structure)
+- [Contributing](#contributing)
 - [License](#license)
+- [Star History](#star-history)
 
 </details>
 
@@ -96,6 +113,21 @@ backend/src/main/java/com/connect_in/backend/
  ├── like/
  ├── team/
  └── shared/
+```
+
+### Architecture Diagram
+
+```mermaid
+graph TD
+    subgraph Docker["Docker Compose"]
+        A[Vue.js SPA] -->|HTTP REST| B[Spring Boot API]
+        B --> C[Controllers / REST]
+        C --> D[Services / Business Logic]
+        D --> E[Repositories / JPA]
+        E --> F[(MySQL)]
+        B --> G[Spring Security / JWT]
+    end
+    D --> H[Local File Storage]
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -243,6 +275,20 @@ Swagger UI is available locally once the application is running.
 
 ---
 
+## Demo
+
+The project is deployed at:
+
+<p align="center">
+  <a href="https://sofian-bll.github.io/ept-connectin-java/"><strong>sofian-bll.github.io/ept-connectin-java/</strong></a>
+</p>
+
+The landing page showcases features, tech stack, and architecture. For a hands-on API playground, launch locally and open Swagger UI at [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
 ## Project Structure
 
 ```text
@@ -260,11 +306,35 @@ Swagger UI is available locally once the application is running.
 
 ---
 
+## Contributing
+
+Contributions are welcome. Fork → branch → PR — standard open-source flow.
+
+<p align="center">
+  <a href="https://github.com/sofian-bll/ept-connectin-java/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=sofian-bll/ept-connectin-java" />
+  </a>
+</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Star History
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sofian-bll/ept-connectin-java&type=Date&theme=dark">
+  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sofian-bll/ept-connectin-java&type=Date&theme=default">
+  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sofian-bll/ept-connectin-java&type=Date" width="100%">
+</picture>
 
 ---
 
