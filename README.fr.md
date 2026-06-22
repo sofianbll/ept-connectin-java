@@ -12,7 +12,7 @@
 
 <br>
 
-<img src="assets/logo.svg" alt="Connect'In Logo" width="160">
+<img src="assets/logo.svg" alt="Connect'In Logo" width="300">
 
 <h1 id="readme-top">Connect'In v2 — API Spring Boot</h1>
 
