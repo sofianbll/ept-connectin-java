@@ -1,13 +1,13 @@
 <div align="center">
 
-<a href="https://github.com/Sofian-bll/ept-connectin-java/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/Sofian-bll/ept-connectin-java?style=flat" alt="License">
+<a href="https://github.com/sofian-bll/ept-connectin-java/blob/main/LICENSE">
+  <img src="https://img.shields.io/github/license/sofian-bll/ept-connectin-java?style=flat" alt="License">
 </a>
-<a href="https://github.com/Sofian-bll/ept-connectin-java/releases">
-  <img src="https://img.shields.io/github/v/release/Sofian-bll/ept-connectin-java?style=flat" alt="Version">
+<a href="https://github.com/sofian-bll/ept-connectin-java/releases">
+  <img src="https://img.shields.io/github/v/release/sofian-bll/ept-connectin-java?style=flat" alt="Version">
 </a>
-<a href="https://github.com/Sofian-bll/ept-connectin-java/stargazers">
-  <img src="https://img.shields.io/github/stars/Sofian-bll/ept-connectin-java?style=flat" alt="Stars">
+<a href="https://github.com/sofian-bll/ept-connectin-java/stargazers">
+  <img src="https://img.shields.io/github/stars/sofian-bll/ept-connectin-java?style=flat" alt="Stars">
 </a>
 
 <br>
@@ -110,7 +110,7 @@ backend/src/main/java/com/connect_in/backend/
 ### Quick Start
 
 ```bash
-git clone git@github.com:Sofian-bll/ept-connectin-java.git
+git clone git@github.com:sofian-bll/ept-connectin-java.git
 cd connect-in-java
 ```
 
@@ -267,6 +267,6 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 ---
 
 <!-- REFERENCE_LINKS -->
-[license-shield]: https://img.shields.io/github/license/Sofian-bll/ept-connectin-java?style=flat
-[version-shield]: https://img.shields.io/github/v/release/Sofian-bll/ept-connectin-java?style=flat
-[stars-shield]: https://img.shields.io/github/stars/Sofian-bll/ept-connectin-java?style=flat
+[license-shield]: https://img.shields.io/github/license/sofian-bll/ept-connectin-java?style=flat
+[version-shield]: https://img.shields.io/github/v/release/sofian-bll/ept-connectin-java?style=flat
+[stars-shield]: https://img.shields.io/github/stars/sofian-bll/ept-connectin-java?style=flat
