@@ -37,12 +37,12 @@ The goal: reproduce every route and payload faithfully while improving robustnes
 
 ## Built With
 
-- [![Java](https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)](https://www.oracle.com/java/) — Runtime
-- [![Spring Boot](https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=flat&logo=Spring-Boot&logoColor=white)](https://spring.io/projects/spring-boot) — Backend framework
-- [![Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=flat&logo=Apache%20Maven&logoColor=white)](https://maven.apache.org/) — Build tool
-- [![MySQL](https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/) — Database
-- [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/) — Containerization
-- [![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs&logoColor=%234FC08D)](https://vuejs.org/) — Frontend client (provided)
+- [![Java][java-shield]](https://www.oracle.com/java/) — Runtime
+- [![Spring Boot][spring-shield]](https://spring.io/projects/spring-boot) — Backend framework
+- [![Maven][maven-shield]](https://maven.apache.org/) — Build tool
+- [![MySQL][mysql-shield]](https://www.mysql.com/) — Database
+- [![Docker][docker-shield]](https://www.docker.com/) — Containerization
+- [![Vue.js][vue-shield]](https://vuejs.org/) — Frontend client (provided)
 
 ---
 
@@ -51,6 +51,8 @@ The goal: reproduce every route and payload faithfully while improving robustnes
 <details open>
 <summary>Contents</summary>
 
+- [What is this?](#what-is-this)
+- [Built With](#built-with)
 - [Features & Architecture](#features--architecture)
 - [Getting Started](#getting-started)
 - [Seed Accounts](#seed-accounts)
@@ -234,7 +236,7 @@ Swagger UI is available locally once the application is running.
 
 <p align="center">
   <img src="Resources/images/db/db-diagram-1.jpg" alt="Database Diagram" width="900">
-  <br><em>Alternative view available <a href="Resources/images/db/db-diagram-2.jpg">here</a>.</em>
+  <br><em>Alternative view available [here](Resources/images/db/db-diagram-2.jpg).</em>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -267,6 +269,12 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 ---
 
 <!-- REFERENCE_LINKS -->
+[java-shield]: https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white
+[spring-shield]: https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=flat&logo=Spring-Boot&logoColor=white
+[maven-shield]: https://img.shields.io/badge/Apache%20Maven-C71A36?style=flat&logo=Apache%20Maven&logoColor=white
+[mysql-shield]: https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=flat&logo=mysql&logoColor=white
+[docker-shield]: https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white
+[vue-shield]: https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs&logoColor=%234FC08D
 [license-shield]: https://img.shields.io/github/license/sofian-bll/ept-connectin-java?style=flat
 [version-shield]: https://img.shields.io/github/v/release/sofian-bll/ept-connectin-java?style=flat
 [stars-shield]: https://img.shields.io/github/stars/sofian-bll/ept-connectin-java?style=flat

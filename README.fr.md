@@ -29,20 +29,20 @@
 
 ## C'est quoi ?
 
-Connect'In est un reseau social professionnel realise dans le cadre d'Epitech. Le backend Laravel d'origine a ete integralement migre vers une **API Java Spring Boot en monolithe modulaire**, couvrant l'authentification (JWT), les utilisateurs, les posts, les commentaires, les likes et les equipes — le tout en conservant le frontend Vue.js existant **strictement inchange**.
+Connect'In est un réseau social professionnel réalisé dans le cadre d'Epitech. Le backend Laravel d'origine a été intégralement migré vers une **API Java Spring Boot en monolithe modulaire**, couvrant l'authentification (JWT), les utilisateurs, les posts, les commentaires, les likes et les équipes — le tout en conservant le frontend Vue.js existant **strictement inchangé**.
 
-L'objectif : reproduire fidelement chaque route et payload tout en ameliorant la robustesse, la securite et la structure du code avec Java Spring Boot.
+L'objectif : reproduire fidèlement chaque route et payload tout en améliorant la robustesse, la sécurité et la structure du code avec Java Spring Boot.
 
 ---
 
 ## Stack Technique
 
-- [![Java](https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)](https://www.oracle.com/java/) — Runtime
-- [![Spring Boot](https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=flat&logo=Spring-Boot&logoColor=white)](https://spring.io/projects/spring-boot) — Framework backend
-- [![Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=flat&logo=Apache%20Maven&logoColor=white)](https://maven.apache.org/) — Outil de build
-- [![MySQL](https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/) — Base de donnees
-- [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/) — Conteneurisation
-- [![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs&logoColor=%234FC08D)](https://vuejs.org/) — Client frontend (fourni)
+- [![Java][java-shield]](https://www.oracle.com/java/) — Runtime
+- [![Spring Boot][spring-shield]](https://spring.io/projects/spring-boot) — Framework backend
+- [![Maven][maven-shield]](https://maven.apache.org/) — Outil de build
+- [![MySQL][mysql-shield]](https://www.mysql.com/) — Base de donnees
+- [![Docker][docker-shield]](https://www.docker.com/) — Conteneurisation
+- [![Vue.js][vue-shield]](https://vuejs.org/) — Client frontend (fourni)
 
 ---
 
@@ -51,6 +51,8 @@ L'objectif : reproduire fidelement chaque route et payload tout en ameliorant la
 <details open>
 <summary>Sommaire</summary>
 
+- [C'est quoi ?](#cest-quoi-)
+- [Stack Technique](#stack-technique)
 - [Fonctionnalites & Architecture](#fonctionnalites--architecture)
 - [Demarrage](#demarrage)
 - [Comptes de test](#comptes-de-test)
@@ -68,22 +70,22 @@ L'objectif : reproduire fidelement chaque route et payload tout en ameliorant la
 
 ### Fonctionnalites
 
-- **Authentification** — Register/Login securise par JWT et Spring Security.
+- **Authentification** — Register/Login sécurisé par JWT et Spring Security.
 - **Utilisateurs** — Gestion du profil, upload d'avatar, recherche, suppression/anonymisation.
-- **Social** — CRUD des posts (avec images et gestion d'equipe), commentaires et likes.
-- **Equipes** — Creation, gestion des membres et des roles.
-- **Data** — Seeders de donnees idempotents pour une demo immediate.
+- **Social** — CRUD des posts (avec images et gestion d'équipe), commentaires et likes.
+- **Équipes** — Création, gestion des membres et des rôles.
+- **Data** — Seeders de données idempotents pour une démo immédiate.
 
 ### Bonus
 
 - Cache applicatif avec Spring (`@Cacheable` / `@CacheEvict`).
 - Tests unitaires couverts par JUnit + Mockito.
-- Gestion d'erreurs JSON centralisee via `@ControllerAdvice`.
-- Conteneurisation complete (Dev & Prod) pilotee par Makefile.
+- Gestion d'erreurs JSON centralisée via `@ControllerAdvice`.
+- Conteneurisation complète (Dev & Prod) pilotée par Makefile.
 
 ### Architecture
 
-L'application suit un monolithe modulaire oriente domaine — chaque domaine metier (auth, user, post, comment, like, team) est isole avec ses propres Controller, Service, Repository et DTO.
+L'application suit un monolithe modulaire orienté domaine — chaque domaine métier (auth, user, post, comment, like, team) est isolé avec ses propres Controller, Service, Repository et DTO.
 
 ```text
 backend/src/main/java/com/connect_in/backend/
@@ -116,21 +118,21 @@ cd connect-in-java
 
 ### Commandes
 
-Un `Makefile` est fourni pour simplifier l'experience developpeur.
+Un `Makefile` est fourni pour simplifier l'expérience développeur.
 
 | Commande | Description |
 |----------|------------|
-| `make dev` | Lance l'environnement de developpement (hot-reload) |
+| `make dev` | Lance l'environnement de développement (hot-reload) |
 | `make prod` | Lance l'environnement de production |
 | `make down` / `make down-dev` | Stoppe les conteneurs (Prod / Dev) |
-| `make reset` / `make reset-dev` | Reinitialise la base de donnees (Prod / Dev) |
+| `make reset` / `make reset-dev` | Réinitialise la base de données (Prod / Dev) |
 | `make clean` | Purge les images et volumes Docker |
 | `make logs` / `make logs-db` | Logs en direct (Backend / BDD) |
 
 **Sans Makefile (Docker Compose directement) :**
 
 ```bash
-# Developpement
+# Développement
 docker compose -f docker-compose.dev.yml up --build --force-recreate
 
 # Production
@@ -143,7 +145,7 @@ docker compose up --build --force-recreate
 
 ## Comptes de test
 
-Utilisez ces comptes generes par les seeders pour tester immediatement :
+Utilisez ces comptes générés par les seeders pour tester immédiatement :
 
 | Email | Password |
 |---|---|
@@ -165,7 +167,7 @@ Swagger UI est disponible en local une fois l'application lancee.
 | Swagger UI | [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) |
 | OpenAPI JSON | [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) |
 
-**Documentation exportee :**
+**Documentation exportée :**
 
 | Document | PDF | Markdown |
 |----------|-----|----------|
@@ -217,7 +219,7 @@ Swagger UI est disponible en local une fois l'application lancee.
 | Methode | Endpoint | Description |
 |---------|----------|-------------|
 | `POST` | `/api/posts/{id}/like` | Toggle like |
-| `GET` | `/api/teams` | Lister les equipes |
+| `GET` | `/api/teams` | Lister les équipes |
 | `POST` | `/api/teams` | Creer une equipe |
 | `GET` | `/api/teams/{id}` | Details d'une equipe |
 | `DELETE` | `/api/teams/{id}` | Supprimer une equipe |
@@ -234,7 +236,7 @@ Swagger UI est disponible en local une fois l'application lancee.
 
 <p align="center">
   <img src="Resources/images/db/db-diagram-1.jpg" alt="Schema BDD" width="900">
-  <br><em>Vue alternative disponible <a href="Resources/images/db/db-diagram-2.jpg">ici</a>.</em>
+  <br><em>Vue alternative disponible [ici](Resources/images/db/db-diagram-2.jpg).</em>
 </p>
 
 <p align="right">(<a href="#readme-top">haut de page</a>)</p>
@@ -267,6 +269,12 @@ Distribue sous licence MIT. Voir [LICENSE](LICENSE) pour plus d'informations.
 ---
 
 <!-- REFERENCE_LINKS -->
+[java-shield]: https://img.shields.io/badge/java%2025-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white
+[spring-shield]: https://img.shields.io/badge/Spring%20Boot%204-6DB33F.svg?style=flat&logo=Spring-Boot&logoColor=white
+[maven-shield]: https://img.shields.io/badge/Apache%20Maven-C71A36?style=flat&logo=Apache%20Maven&logoColor=white
+[mysql-shield]: https://img.shields.io/badge/mysql%208.4-%2300f.svg?style=flat&logo=mysql&logoColor=white
+[docker-shield]: https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white
+[vue-shield]: https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs&logoColor=%234FC08D
 [license-shield]: https://img.shields.io/github/license/sofian-bll/ept-connectin-java?style=flat
 [version-shield]: https://img.shields.io/github/v/release/sofian-bll/ept-connectin-java?style=flat
 [stars-shield]: https://img.shields.io/github/stars/sofian-bll/ept-connectin-java?style=flat

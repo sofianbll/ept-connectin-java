@@ -6,17 +6,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>connect-in</title>
-<meta name="description" content="Réseau social interne pour ESN — API REST Laravel + Vue.js">
+<title>ConnectIn-Java</title>
+<meta name="description" content="Professional social network API — Spring Boot, JWT, Docker">
 <meta name="theme-color" content="#0a080d">
-<meta property="og:title" content="connect-in">
-<meta property="og:description" content="Réseau social interne pour ESN — API REST Laravel + Vue.js">
+<meta property="og:title" content="ConnectIn-Java">
+<meta property="og:description" content="Professional social network API — Spring Boot, JWT, Docker">
 <meta property="og:type" content="website">
-
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="connect-in">
-<meta name="twitter:description" content="Réseau social interne pour ESN — API REST Laravel + Vue.js">
-
+<meta name="twitter:title" content="ConnectIn-Java">
+<meta name="twitter:description" content="Professional social network API — Spring Boot, JWT, Docker">
+<meta name="twitter:image" content="assets/og-image.png">
 
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -228,15 +230,15 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
 <!-- @section nav -->
 <nav class="sticky top-0 z-50 bg-bg/70 backdrop-blur-xl border-b border-border/50 py-3 px-6 transition-colors duration-300">
   <div class="w-full max-w-container mx-auto flex items-center justify-between gap-4">
-    <a href="https://github.com/Sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group shrink-0">
+    <a href="https://github.com/sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group shrink-0">
       <div class="text-text group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-        <span class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-bg font-black text-base">C</span>
+        <img src="../assets/logo.svg" alt="ConnectIn" class="h-10 w-auto">
       </div>
-      <span class="font-bold text-[16px] whitespace-nowrap text-text group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent transition-all">connect-in</span>
+      <span class="font-bold text-[16px] whitespace-nowrap text-text group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent transition-all">ConnectIn-Java</span>
     </a>
 
     <div class="flex items-center gap-3 flex-shrink-0">
-      <a href="https://github.com/Sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 text-xs font-semibold text-muted hover:text-text transition-colors px-4 py-2 rounded-full border border-border bg-surface hover:border-[var(--primary-dim)] hover:bg-elevated">
+      <a href="https://github.com/sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 text-xs font-semibold text-muted hover:text-text transition-colors px-4 py-2 rounded-full border border-border bg-surface hover:border-[var(--primary-dim)] hover:bg-elevated">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         GitHub
       </a>
@@ -269,7 +271,7 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
       </div>
 
       <h1 class="headline text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.15] mb-8 max-w-4xl text-gradient">
-        Connect'In v2
+        ConnectIn-Java
       </h1>
 
       <p class="text-muted text-lg md:text-xl max-w-2xl leading-relaxed mb-12 font-medium">
@@ -278,10 +280,10 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
 
       <div class="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto">
         <a href="#quick-start" class="px-8 py-3.5 rounded-full font-bold text-sm text-[var(--bg)] bg-[var(--text)] hover:scale-105 shadow-xl hover:shadow-[0_0_30px_var(--primary-glow)] transition-all flex items-center justify-center gap-2">
-          Get Started
+          Quick Start
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
-        <a href="https://github.com/Sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="glass px-8 py-3.5 !rounded-full font-bold text-sm text-text hover:bg-elevated transition-colors flex items-center justify-center gap-2">
+        <a href="https://github.com/sofian-bll/ept-connectin-java" target="_blank" rel="noopener noreferrer" class="glass px-8 py-3.5 !rounded-full font-bold text-sm text-text hover:bg-elevated transition-colors flex items-center justify-center gap-2">
           View on GitHub
         </a>
       </div>
@@ -290,11 +292,11 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-3xl mx-auto pt-12 reveal visible" style="transition-delay:.15s">
 <div class="glass rounded-xl p-4 flex items-center gap-3 text-left">
           <div class="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10"/></svg>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
           </div>
           <div class="min-w-0">
             <div class="text-sm"><span class="font-bold text-lg text-primary leading-tight">6</span> <span class="font-semibold text-text">Modules</span></div>
-            <div class="text-[11px] text-muted mt-0.5 leading-tight">domain-driven</div>
+            <div class="text-[11px] text-muted mt-0.5 leading-tight">Domain-driven modular monolith</div>
           </div>
         </div>
 <div class="glass rounded-xl p-4 flex items-center gap-3 text-left">
@@ -303,7 +305,7 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
           </div>
           <div class="min-w-0">
             <div class="text-sm"><span class="font-bold text-lg text-secondary leading-tight">21</span> <span class="font-semibold text-text">Endpoints</span></div>
-            <div class="text-[11px] text-muted mt-0.5 leading-tight">REST API</div>
+            <div class="text-[11px] text-muted mt-0.5 leading-tight">REST API + Swagger docs</div>
           </div>
         </div>
 <div class="glass rounded-xl p-4 flex items-center gap-3 text-left">
@@ -312,7 +314,7 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
           </div>
           <div class="min-w-0">
             <div class="text-sm"><span class="font-bold text-lg text-accent leading-tight">88</span> <span class="font-semibold text-text">Commits</span></div>
-            <div class="text-[11px] text-muted mt-0.5 leading-tight">since March 2026</div>
+            <div class="text-[11px] text-muted mt-0.5 leading-tight">Since March 2026</div>
           </div>
         </div>
       </div>
@@ -336,6 +338,35 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
 <!-- STORY — glass cards with connector dots                      -->
 <!-- ============================================================ -->
 
+<!-- @section story-horizontal -->
+<section class="py-[var(--section-py)] relative">
+  <div class="w-full max-w-container mx-auto px-6">
+    <div class="text-center max-w-container-sm mx-auto mb-20 reveal">
+      <h2 class="headline text-3xl md:text-5xl font-bold mb-6 tracking-tight">Project Story</h2>
+      <div class="text-muted text-lg leading-relaxed"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto relative">
+      <div class="hidden md:block absolute top-1/2 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-border to-transparent -translate-y-1/2 z-[-1]"></div>
+            <div class="reveal visible glass rounded-2xl p-6 flex flex-col" style="transition-delay:0.0s">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-[10px] font-mono font-bold uppercase tracking-wider border border-primary/40 text-primary px-2 py-0.5 rounded-full">v1.0.0</span>
+          <span class="text-[10px] font-mono font-bold tracking-wider text-muted uppercase">March - May 2026</span>
+        </div>
+        <p class="text-sm text-muted leading-relaxed mb-4 flex-1">Full backend migration from Laravel to Java Spring Boot. 21 endpoints, JWT auth, modular monolith.</p>
+        
+      </div>
+      <div class="reveal visible glass rounded-2xl p-6 flex flex-col" style="transition-delay:0.1s">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-[10px] font-mono font-bold uppercase tracking-wider border border-secondary/40 text-secondary px-2 py-0.5 rounded-full">v1.1.0</span>
+          <span class="text-[10px] font-mono font-bold tracking-wider text-muted uppercase">June 2026</span>
+        </div>
+        <p class="text-sm text-muted leading-relaxed mb-4 flex-1">Portfolio polish: bilingual README, landing page, GitHub Pages, Bentofolio showcase.</p>
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /@section story-horizontal -->
 
 
 <!-- ============================================================ -->
@@ -352,42 +383,42 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.0s">
         <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
         <h3 class="font-bold text-lg">JWT Authentication</h3>
         <p class="text-muted text-sm leading-relaxed">Secure register/login with Spring Security and token-based auth.</p>
       </div>
       <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.1s">
         <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10"/></svg>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
         </div>
         <h3 class="font-bold text-lg">User Management</h3>
-        <p class="text-muted text-sm leading-relaxed">Profile editing, avatar upload, search, account deletion & anonymization.</p>
+        <p class="text-muted text-sm leading-relaxed">Profile editing, avatar upload, search, account deletion and anonymization.</p>
       </div>
       <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.2s">
-        <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         </div>
         <h3 class="font-bold text-lg">Social Feed</h3>
         <p class="text-muted text-sm leading-relaxed">CRUD posts with image upload, comments, and like toggling.</p>
       </div>
       <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.3s">
-        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         </div>
         <h3 class="font-bold text-lg">Team System</h3>
         <p class="text-muted text-sm leading-relaxed">Create teams, manage members and roles with full access control.</p>
       </div>
       <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.4s">
-        <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         </div>
         <h3 class="font-bold text-lg">App Cache</h3>
         <p class="text-muted text-sm leading-relaxed">Spring Caching (@Cacheable/@CacheEvict) for optimized performance.</p>
       </div>
       <div class="reveal visible glass rounded-2xl p-8 flex flex-col gap-4" style="transition-delay:0.5s">
         <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         </div>
         <h3 class="font-bold text-lg">Docker Ready</h3>
         <p class="text-muted text-sm leading-relaxed">Full Dev/Prod containerization with Makefile-driven workflow.</p>
@@ -411,7 +442,7 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
   <div class="w-full max-w-container mx-auto px-6">
     <div class="text-center max-w-container-sm mx-auto mb-16 reveal">
       <h2 class="headline text-3xl md:text-5xl font-bold mb-6 tracking-tight">Quick Start</h2>
-      <div class="text-muted text-lg"><p class="text-muted">Clone, build, and run in under 60 seconds.</p></div>
+      <div class="text-muted text-lg"><p class="text-muted">Get up and running in under 60 seconds.</p></div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div class="reveal visible glass rounded-2xl overflow-hidden flex flex-col group" style="transition-delay:0.0s">
@@ -424,7 +455,7 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           </button>
         </div>
-        <pre id="code-clone" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><code class="text-accent">git clone git@github.com:Sofian-bll/ept-connectin-java.git</code>
+        <pre id="code-clone" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><code class="text-accent">git clone git@github.com:sofian-bll/ept-connectin-java.git</code>
 <code class="text-accent">cd connect-in-java</code></pre>
       </div>
       <div class="reveal visible glass rounded-2xl overflow-hidden flex flex-col group" style="transition-delay:0.1s">
@@ -437,8 +468,10 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           </button>
         </div>
-        <pre id="code-dev" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><span class="text-muted">Start with hot-reload (Docker)</span>
-<code class="text-primary">make dev</code></pre>
+        <pre id="code-dev" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><span class="text-muted"># Hot-reload + debug</span>
+<code class="text-primary">make dev</code>
+<span class="text-muted"># Live logs</span>
+<code class="text-primary">make logs</code></pre>
       </div>
       <div class="reveal visible glass rounded-2xl overflow-hidden flex flex-col group" style="transition-delay:0.2s">
         <div class="flex items-center gap-1.5 px-4 py-3 bg-surface border-b border-white/5 rounded-t-2xl">
@@ -450,8 +483,10 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           </button>
         </div>
-        <pre id="code-prod" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><span class="text-muted">Start production environment</span>
-<code class="text-secondary">make prod</code></pre>
+        <pre id="code-prod" class="p-6 text-sm text-text leading-relaxed whitespace-pre-wrap overflow-x-hidden"><span class="text-muted"># Docker production build</span>
+<code class="text-secondary">make prod</code>
+<span class="text-muted"># Live logs</span>
+<code class="text-secondary">make logs</code></pre>
       </div>
     </div>
   </div>
@@ -488,66 +523,39 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
           <span class="text-xs text-muted ml-3 font-mono font-medium tracking-wider select-none">project-architecture</span>
         </div>
         <div class="p-6 bg-[#09090b] dark:bg-transparent overflow-x-auto">
-          <pre class="font-mono text-sm leading-loose text-gray-300">connect-in/
+          <pre class="font-mono text-sm leading-loose text-gray-300">connect-in-java/
 ├── .gitignore
 ├── LICENSE
 ├── Makefile
-├── README.en.md
 ├── README.md
+├── README.fr.md
 ├── assets/
 │   └── logo.svg
 ├── backend/
-│   ├── .dockerignore
-│   ├── .editorconfig
-│   ├── .env
-│   ├── .env.example
-│   ├── .gitattributes
-│   ├── .gitignore
-│   ├── app/
-│   ├── artisan
-│   ├── bootstrap/
-│   ├── compose.yaml
-│   ├── composer.json
-│   ├── composer.lock
-│   ├── config/
-│   ├── database/
-│   ├── package.json
-│   ├── phpunit.xml
-│   ├── public/
-│   ├── resources/
-│   ├── routes/
-│   ├── storage/
-│   ├── tests/
-│   ├── vendor/
-│   └── vite.config.js
-├── bruno/
-│   ├── 01. Auth/
-│   ├── 02. Users/
-│   ├── 03. Posts/
-│   ├── 04. Comments/
-│   ├── 05. Likes/
-│   ├── bruno.json
-│   ├── collection.bru
-│   └── environments/
-├── erb.30.50.png
-├── frontend/
-│   ├── .env
-│   ├── .env.example
-│   ├── .gitignore
-│   ├── .prettierrc
-│   ├── .vscode/
 │   ├── Dockerfile
-│   ├── README.md
-│   ├── components.json
-│   ├── index.html
-│   ├── jsconfig.json
-│   ├── nginx.conf
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── public/
+│   ├── Dockerfile.dev
+│   ├── mvnw
+│   ├── pom.xml
 │   ├── src/
-│   └── vite.config.js
-└── pbpaste</pre>
+│   │   ├── main/java/com/connect_in/backend/
+│   │   │   ├── auth/
+│   │   │   ├── user/
+│   │   │   ├── post/
+│   │   │   ├── comment/
+│   │   │   ├── like/
+│   │   │   ├── team/
+│   │   │   └── shared/
+│   │   └── test/java/com/connect_in/backend/
+│   └── target/
+├── frontend/
+│   └── frontend/        # Vue 3 client
+├── docs/
+│   ├── .nojekyll
+│   ├── assets/
+│   └── index.html
+├── docker-compose.yml
+├── docker-compose.dev.yml
+└── storage/              # Avatars & post images</pre>
         </div>
       </div>
     </div>
@@ -566,12 +574,18 @@ a:active, button:active { transform: scale(0.97); transition: transform 0.1s eas
   <div class="w-full max-w-container mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
     <div class="flex flex-col items-center md:items-start gap-1 text-xs text-muted">
       <div class="font-semibold text-text">
-        connect-in
+        ConnectIn-Java
       </div>
       <div>MIT License &copy; 2026 Sofian</div>
     </div>
     <div class="flex items-center gap-4 text-sm font-medium text-muted">
-      
+      <span class="text-[10px] font-mono border border-border px-3 py-1 rounded-full">java</span>
+        <span class="text-[10px] font-mono border border-border px-3 py-1 rounded-full">spring-boot</span>
+        <a href="https://www.docker.com/" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white" alt="Docker" class="h-5"></a>
+        <a href="https://www.mysql.com/" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/mysql-%234479A1.svg?style=flat&logo=mysql&logoColor=white" alt="MySQL" class="h-5"></a>
+        <img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs&logoColor=%234FC08D" alt="Vue.js" class="h-5">
+        <span class="text-[10px] font-mono border border-border px-3 py-1 rounded-full">jwt</span>
+        <span class="text-[10px] font-mono border border-border px-3 py-1 rounded-full">maven</span>
     </div>
   </div>
 </footer>
